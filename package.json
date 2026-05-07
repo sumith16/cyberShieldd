@@ -1,0 +1,9 @@
+{
+  "name": "cybershield-portal",
+  "version": "1.0.0",
+  "description": "CyberShield Awareness Hub",
+  "scripts": {
+    "start": "serve ."
+  },
+  "dependencies": {}
+}

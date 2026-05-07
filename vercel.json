@@ -5,8 +5,6 @@
   "rewrites": [
     { "source": "/login", "destination": "/login.html" },
     { "source": "/academy", "destination": "/cybershield-academy.html" },
-    { "source": "/hub", "destination": "/cyber_safety_awareness_hub.html" },
-    { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/(.*)", "destination": "/$1" }
+    { "source": "/hub", "destination": "/cyber_safety_awareness_hub.html" }
   ]
 }
