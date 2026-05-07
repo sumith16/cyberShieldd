@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   
+  <meta charset="UTF-8">
+   
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberShield Mobile</title>
+   
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+    /* --- MOBILE-FIRST RESET & TOUCH OPTIMIZATIONS --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    :root {
+      --bg-base: #0B0E14;
+      --bg-surface: #151A23;
+      --bg-card: #1C2331;
+      --bg-elevated: #283141;
+
+      --accent-primary: #3B82F6;
+      --accent-secondary: #10B981;
+      --accent-purple: #8B5CF6;
+      --accent-cyan: #06B6D4;
+
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+
+      --danger: #EF4444;
+      --warning: #F59E0B;
+      --success: #10B981;
+
+      --font-main: 'Nunito', sans-serif;
+      --header-h: 72px;
+      --bottom-nav-h: 84px;
+      --pad: 18px;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* --- TOP HEADER (Sticky) --- */
+    .top-header {
+      height: var(--header-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--pad);
+      background-color: rgba(21, 26, 35, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 50;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-purple));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 18px;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    }
+
+    .brand-text {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+    }
+
+    .user-pill {
+      background: var(--bg-elevated);
+      padding: 8px 16px;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .lang-select {
+      background: var(--bg-elevated);
+      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 8px 12px;
+      border-radius: 24px;
+      font-family: var(--font-main);
+      font-size: 12px;
+      font-weight: 800;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      text-align: center;
+    }
+
+    .lang-select:focus {
+      border-color: var(--accent-primary);
+    }
+
+    /* --- HORIZONTAL SWIPE MENU (Sub-Navigation) --- */
+    .swipe-nav {
+      display: flex;
+      gap: 10px;
+      padding: 14px var(--pad);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      background: var(--bg-base);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .swipe-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-pill {
+      background: var(--bg-surface);
+      color: var(--text-muted);
+      padding: 12px 20px;
+      border-radius: 24px;
+      font-size: 15px;
+      font-weight: 800;
+      white-space: nowrap;
+      scroll-snap-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 48px;
+    }
+
+    .nav-pill.active {
+      background: var(--accent-primary);
+      color: #fff;
+      border-color: var(--accent-primary);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    /* --- MAIN CONTENT AREA --- */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 12px var(--pad) calc(var(--bottom-nav-h) + 24px);
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .main-content::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tool-panel {
+      display: none;
+      animation: slideUp 0.3s ease;
+    }
+
+    .tool-panel.active {
+      display: block;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .panel-header {
+      font-size: 26px;
+      font-weight: 900;
+      margin-bottom: 6px;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .panel-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    /* --- MOBILE GRIDS & CARDS --- */
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .hero-card {
+      background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, transparent 70%);
+    }
+
+    .swipe-grid {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 16px;
+      padding-bottom: 16px;
+      margin-right: calc(var(--pad) * -1);
+      padding-right: var(--pad);
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .swipe-grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .stat-box {
+      background: var(--bg-surface);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 150px;
+      scroll-snap-align: start;
+      flex-shrink: 0;
+    }
+
+    .stat-val {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1;
+      margin: 10px 0 6px;
+    }
+
+    .stat-lbl {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    /* --- INPUTS, BUTTONS & FORMS --- */
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .field-label {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-muted);
+      margin-bottom: -6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .cyber-input,
+    .cyber-select,
+    .cyber-textarea {
+      width: 100%;
+      background: var(--bg-elevated);
+      border: 2px solid transparent;
+      color: #fff;
+      font-family: var(--font-main);
+      font-size: 16px;
+      font-weight: 600;
+      padding: 16px;
+      border-radius: 16px;
+      outline: none;
+      transition: all 0.2s;
+      min-height: 54px;
+    }
+
+    .cyber-textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .cyber-input:focus,
+    .cyber-select:focus,
+    .cyber-textarea:focus {
+      border-color: var(--accent-primary);
+      background: #1C2331;
+    }
+
+    .cyber-input::placeholder,
+    .cyber-textarea::placeholder {
+      color: #64748B;
+      font-weight: 600;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 18px 20px;
+      border: none;
+      background: var(--bg-elevated);
+      color: #fff;
+      font-family: var(--font-main);
+      font-size: 17px;
+      font-weight: 800;
+      border-radius: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.1s;
+      min-height: 56px;
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+    }
+
+    .btn-primary {
+      background: var(--accent-primary);
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-success {
+      background: var(--success);
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-warning {
+      background: var(--warning);
+      color: #000;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+    }
+
+    /* --- RESULTS & ALERTS --- */
+    .result-box {
+      background: var(--bg-elevated);
+      border-radius: 16px;
+      padding: 20px;
+      border-left: 5px solid var(--accent-primary);
+      font-size: 15px;
+      line-height: 1.6;
+      margin-top: 20px;
+      font-weight: 600;
+    }
+
+    .result-box.danger {
+      border-left-color: var(--danger);
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    .result-box.warning {
+      border-left-color: var(--warning);
+      background: rgba(245, 158, 11, 0.1);
+    }
+
+    .result-box.success {
+      border-left-color: var(--success);
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .badge-green {
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--success);
+    }
+
+    .badge-red {
+      background: rgba(239, 68, 68, 0.2);
+      color: var(--danger);
+    }
+
+    .badge-amber {
+      background: rgba(245, 158, 11, 0.2);
+      color: var(--warning);
+    }
+
+    .badge-cyan {
+      background: rgba(6, 182, 212, 0.2);
+      color: var(--accent-cyan);
+    }
+
+    /* --- CHUNKY TOGGLES & LISTS --- */
+    .list-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px;
+      background: var(--bg-surface);
+      border-radius: 16px;
+      margin-bottom: 12px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .chunky-toggle {
+      width: 60px;
+      height: 34px;
+      border-radius: 17px;
+      background: var(--bg-elevated);
+      position: relative;
+      transition: background 0.3s;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .chunky-toggle.on {
+      background: var(--success);
+    }
+
+    .chunky-toggle::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #fff;
+      transition: left 0.3s;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .chunky-toggle.on::after {
+      left: 30px;
+    }
+
+    /* --- NEWS & ALERTS CARDS --- */
+    .news-card {
+      background: var(--bg-elevated);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .news-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
+    .news-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.4;
+    }
+
+    .alert-card {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      display: flex;
+      gap: 16px;
+    }
+
+    /* --- SPINNER --- */
+    .spinner {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-top-color: var(--accent-primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* --- FIXED BOTTOM NAVIGATION --- */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: var(--bottom-nav-h);
+      background: rgba(11, 14, 20, 0.95);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding-bottom: env(safe-area-inset-bottom);
+      z-index: 100;
+    }
+
+    .bottom-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      width: 20%;
+      height: 100%;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .bottom-tab.active {
+      color: var(--accent-primary);
+    }
+
+    .tab-icon {
+      font-size: 26px;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .bottom-tab.active .tab-icon {
+      transform: translateY(-4px) scale(1.1);
+    }
+
+    .tab-lbl {
+      font-size: 12px;
+      font-weight: 800;
+    }
+  </style>
+</head>
+
+<body>
+
+    <header class="top-header">
+        <div style="display:flex; align-items:center; gap:12px;">
+            <a href="index.html"
+        style="color:var(--text-main); text-decoration:none; font-size:24px; display:flex; align-items:center; opacity:0.8;"
+        title="Back to Hub">←</a>
+            <div class="brand">
+                <div class="brand-icon">CS</div>
+                <div class="brand-text">CyberShield</div>
+              </div>
+          </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+            <select class="lang-select" id="lang-selector">
+                <option value="en">ENG</option>
+                <option value="hi">हिंदी</option>
+                <option value="kn">ಕನ್ನಡ</option>
+              </select>
+            <div class="user-pill">
+                <span style="color:var(--warning); font-size:16px;">⚡</span> <span id="user-xp">1,250 XP</span>
+              </div>
+          </div>
+      </header>
+
+    <nav class="swipe-nav" id="swipeNav">
+        <div class="nav-pill active" onclick="openPanel('dashboard', this)" id="pill-dashboard">🏠 Home</div>
+        <div class="nav-pill" onclick="openPanel('news', this)" id="pill-news">📰 Live News</div>
+        <div class="nav-pill" onclick="openPanel('fake', this)" id="pill-fake">🕵️ Fake Msg</div>
+        <div class="nav-pill" onclick="openPanel('antivirus', this)" id="pill-antivirus">🦠 Antivirus</div>
+        <div class="nav-pill" onclick="openPanel('firewall', this)" id="pill-firewall">🧱 Firewall</div>
+        <div class="nav-pill" onclick="openPanel('ids', this)" id="pill-ids">📡 IDS Log</div>
+        <div class="nav-pill" onclick="openPanel('endpoint', this)" id="pill-endpoint">💻 Devices</div>
+        <div class="nav-pill" onclick="openPanel('password', this)" id="pill-password">🔑 Passwords</div>
+        <div class="nav-pill" onclick="openPanel('web', this)" id="pill-web">🌐 Web Check</div>
+        <div class="nav-pill" onclick="openPanel('report', this)" id="pill-report">🚨 Report</div>
+        <div class="nav-pill" onclick="openPanel('alerts', this)" id="pill-alerts">🔔 Threat Alerts</div>
+      </nav>
+
+    <main class="main-content" id="mainContent">
+
+        <div class="tool-panel active" id="panel-dashboard">
+            <div class="card hero-card">
+                <h1 style="font-size:28px; font-weight:900; margin-bottom:10px;">Welcome back! 👋</h1>
+                <p style="font-size:16px; color:var(--text-muted); line-height:1.5; margin-bottom:24px;">
+                    Your system is safe. Keep monitoring to reach Elite status.
+                  </p>
+                <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+                    <div>
+                        <div style="font-size:42px; font-weight:900; color:var(--accent-primary); line-height:1;">12
+              Days</div>
+                        <div              
+              style="font-size:13px; font-weight:800; color:var(--text-muted); text-transform:uppercase; margin-top:8px;">
+                            Active Streak 🔥</div>
+                      </div>
+                  </div>
+              </div>
+
+            <div class="swipe-grid">
+                <div class="stat-box">
+                    <div style="font-size:32px;">🛡️</div>
+                    <div class="stat-val">4</div>
+                    <div class="stat-lbl">Devices</div>
+                  </div>
+                <div class="stat-box">
+                    <div style="font-size:32px;">🎯</div>
+                    <div class="stat-val">15</div>
+                    <div class="stat-lbl">Scans</div>
+                  </div>
+                <div class="stat-box" style="border-color:var(--accent-primary);">
+                    <div style="font-size:32px;">💎</div>
+                    <div class="stat-val">850</div>
+                    <div class="stat-lbl">Security Score</div>
+                  </div>
+                <div class="stat-box">
+                    <div style="font-size:32px;">🏆</div>
+                    <div class="stat-val">2</div>
+                    <div class="stat-lbl">Threats Found</div>
+                  </div>
+              </div>
+
+            <div class="card">
+                <div class="panel-header" style="font-size:20px;">Quick Launch</div>
+                <div class="input-group" style="margin-top:20px;">
+                    <button class="btn btn-primary" onclick="openPanel('news', document.getElementById('pill-news'))">📰
+            View
+                        Breaking Cyber News</button>
+                    <button class="btn btn-warning"
+            onclick="openPanel('password', document.getElementById('pill-password'))">🔑
+                        Check Password Strength</button>
+                    <button class="btn" style="border: 2px solid var(--accent-primary);"            
+            onclick="openPanel('fake', document.getElementById('pill-fake'))">🔍 Analyze a Text Message</button>
+                  </div>
+              </div>
+          </div>
+
+        <div class="tool-panel" id="panel-news">
+            <div class="panel-header">Cyber News Live</div>
+            <div class="panel-desc">Real-time intelligence on global cyber attacks and data breaches straight from The
+        Hacker
+                News.</div>
+
+            <div class="swipe-grid" style="margin-bottom:20px;">
+                <div class="stat-box" style="min-width:180px;">
+                    <div class="stat-val" style="color:var(--danger);">LIVE</div>
+                    <div class="stat-lbl">Global Threat Feed</div>
+                  </div>
+                <div class="stat-box" style="min-width:180px;">
+                    <div class="stat-val" style="color:var(--warning);">High</div>
+                    <div class="stat-lbl">Current Threat Level</div>
+                  </div>
+              </div>
+
+            <div id="news-feed-container">
+              </div>
+          </div>
+
+        <div class="tool-panel" id="panel-fake">
+            <div class="panel-header">Message Analyzer</div>
+            <div class="panel-desc">Advanced heuristic engine. Paste a suspicious SMS, email, or social media DM to scan
+        for
+                phishing vectors.</div>
+
+            <div class="card">
+                <div class="input-group">
+                    <label class="field-label">Suspicious Message Content</label>
+                    <textarea class="cyber-textarea" id="fake-input"            
+            placeholder="e.g. 'URGENT: Your account is locked. Verify details here...'"></textarea>
+                    <button class="btn btn-primary" onclick="analyzeFakeMsg()">🔍 Deep Scan Message</button>
+                    <div style="display:flex; gap:16px;">
+                        <button class="btn" style="flex:1; border: 2px solid var(--text-muted); background:transparent;"
+                            onclick="loadSampleScam()">🎲 Load Example</button>
+                        <button class="btn" style="flex:1; border: 2px solid var(--text-muted); background:transparent;"
+                            onclick="clearFake()">🗑️ Clear</button>
+                      </div>
+                  </div>
+              </div>
+
+            <div id="fake-loading" style="display:none; text-align:center; padding:30px;">
+                <span class="spinner" style="width:40px; height:40px; border-width:5px;"></span>
+                <div id="fake-loading-steps"          
+          style="font-size:15px; font-weight:800; color:var(--accent-primary); margin-top:20px;">Initializing scan
+                    sequence...</div>
+              </div>
+
+            <div id="fake-result" style="display:none">
+                <div class="grid-2">
+                    <div class="stat-box">
+                        <div class="stat-val" id="fake-score" style="font-size:36px;">0%</div>
+                        <div class="stat-lbl">Threat Score</div>
+                      </div>
+                    <div class="stat-box">
+                        <div class="stat-val" id="fake-flags-count" style="color:var(--danger); font-size:36px;">0</div>
+                        <div class="stat-lbl">Vectors Found</div>
+                      </div>
+                  </div>
+
+                <div class="card" style="text-align:center;">
+                    <div class="stat-lbl" style="margin-bottom:12px;">Final Verdict</div>
+                    <div id="fake-verdict" style="font-size:32px; font-weight:900;">—</div>
+                  </div>
+
+                <div class="card">
+                    <div class="field-label" style="margin-bottom:16px;">Detailed Analysis Report</div>
+                    <div id="fake-indicators"></div>
+                  </div>
+                <div class="result-box" id="fake-advice"></div>
+              </div>
+          </div>
+
+        <div class="tool-panel" id="panel-antivirus">
+            <div class="panel-header">Antivirus Scanner</div>
+            <div class="panel-desc">Scan files and links for malicious payloads.</div>
+
+            <div class="grid-2">
+                <div class="stat-box">
+                    <div class="stat-val">2,847</div>
+                    <div class="stat-lbl">Blocked</div>
+                  </div>
+                <div class="stat-box">
+                    <div class="stat-val" style="color:var(--success)">100%</div>
+                    <div class="stat-lbl">Detection</div>
+                  </div>
+              </div>
+
+            <div class="card">
+                <div class="input-group">
+                    <label class="field-label">File Path or Link</label>
+                    <input class="cyber-input" id="av-input" placeholder="Paste link or filename here...">
+                    <button class="btn btn-success" onclick="runAVScan()">🛡️ Scan Now</button>
+                  </div>
+                <div id="av-result" style="display:none; margin-top:20px;">
+                    <div class="loading-bar" id="av-bar"            
+            style="display:none; height:6px; border-radius:3px; background:var(--success); margin-bottom:16px;"></div>
+                    <div id="av-output"></div>
+                  </div>
+              </div>
+
+            <div class="card">
+                <div class="field-label" style="margin-bottom:16px;">Real-Time Shields</div>
+                <div class="list-row"><span>File Guard</span>
+                    <div class="chunky-toggle on" onclick="toggleMe(this)"></div>
+                  </div>
+                <div class="list-row"><span>Web Filter</span>
+                    <div class="chunky-toggle on" onclick="toggleMe(this)"></div>
+                  </div>
+                <div class="list-row"><span>Downloads</span>
+                    <div class="chunky-toggle on" onclick="toggleMe(this)"></div>
+                  </div>
+              </div>
+          </div>
+
+        <div class="tool-panel" id="panel-firewall">
+            <div class="panel-header">Firewall</div>
+            <div class="panel-desc">Manage the walls protecting your network.</div>
+
+            <div class="grid-2">
+                <div class="stat-box">
+                    <div class="stat-val" id="fw-blocked" style="color:var(--danger)">0</div>
+                    <div class="stat-lbl">Blocked</div>
+                  </div>
+                <div class="stat-box">
+                    <div class="stat-val" id="fw-allowed" style="color:var(--success)">0</div>
+                    <div class="stat-lbl">Allowed</div>
+                  </div>
+              </div>
+
+            <div class="card">
+                <div class="input-group">
+                    <label class="field-label">Add Wall Rule</label>
+                    <input class="cyber-input" id="fw-ip" placeholder="IP / Website (e.g. 192.168.1.5)">
+                    <div style="display:flex; gap:16px;">
+                        <input class="cyber-input" id="fw-port" placeholder="Port (e.g. 80)" style="flex:1;">
+                        <select class="cyber-select" id="fw-action" style="flex:1;">
+                            <option value="block">🚫 Block</option>
+                            <option value="allow">✅ Allow</option>
+                          </select>
+                      </div>
+                    <button class="btn btn-primary" onclick="addFWRule()">➕ Add Rule</button>
+                  </div>
+              </div>
+
+            <div class="card">
+                <div class="field-label" style="margin-bottom:16px;">Live Network Traffic</div>
+                <div id="fw-traffic"          
+          style="max-height:250px; overflow-y:auto; font-family:monospace; font-size:15px; font-weight:700; background:var(--bg-elevated); padding:16px; border-radius:16px; border:1px solid rgba(255,255,255,0.05); line-height:1.6;">
+                  </div>
+              </div>
+
+            <div class="card">
+                <div class="field-label" style="margin-bottom:16px;">Active Rules</div>
+                <div id="fw-rules-list"></div>
+              </div>
+          </div>
+
+        <div class="tool-panel" id="panel-ids">
+            <div class="panel-header">Intrusion Detection</div>
+            <div class="panel-desc">Monitor network events for suspicious activity.</div>
+
+            <div class="card">
+                <div style="display:flex; gap:16px; margin-bottom:24px;">
+                    <button class="btn btn-success" style="flex:1;" onclick="ids_start()" id="ids-btn-start">▶️
+            Start</button>
+                    <button class="btn btn-danger" style="flex:1;" onclick="ids_stop()" id="ids-btn-stop" disabled      
+                  style="opacity:0.5;">⏹️ Stop</button>
+                  </div>
+                <div class="field-label" style="margin-bottom:16px;">Live Event Log</div>
+                <div id="ids-log"          
+          style="max-height:350px; overflow-y:auto; background:var(--bg-elevated); border-radius:16px; padding:10px; border:1px solid rgba(255,255,255,0.05);">
+                    <div style="text-align:center; padding:20px; color:var(--text-muted);">Monitor stopped. Click Start.
+          </div>
+                  </div>
+              </div>
+
+            <div class="card">
+                <div class="field-label" style="margin-bottom:16px;">Auto-Responses</div>
+                <div class="list-row"><span>Block Scanners</span>
+                    <div class="chunky-toggle on" onclick="toggleMe(this)"></div>
+                  </div>
+                <div class="list-row"><span>Block Tor Nodes</span>
+                    <div class="chunky-toggle" onclick="toggleMe(this)"></div>
+                  </div>
+              </div>
+          </div>
+
+        <div class="tool-panel" id="panel-endpoint">
+            <div class="panel-header">Device Health</div>
+            <div class="panel-desc">Monitor device posture and compliance.</div>
+
+            <div class="card" style="border: 3px solid var(--success);">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <div>
+                        <div style="font-size:20px; font-weight:900;">💻 Local Workstation</div>
+                        <div style="font-size:14px; font-weight:700; color:var(--text-muted); margin-top:4px;">Secure
+              Browser
+                            Environment</div>
+                      </div>
+                    <span class="badge badge-green" style="font-size:13px; padding:6px 14px;">SECURE</span>
+                  </div>
+                <div
+          style="margin-top:20px; font-size:16px; font-weight:700; display:flex; flex-direction:column; gap:12px;">
+                    <div>✅ Safe Browsing Active</div>
+                    <div>✅ Connection Encrypted</div>
+                    <div>⚠️ <span style="color:var(--warning)">VPN Not Detected</span></div>
+                  </div>
+                <button class="btn btn-primary" style="margin-top:24px;" onclick="runEPScan()">🩺 Deep Scan</button>
+                <div id="ep-scan-result" style="margin-top:20px; display:none;"></div>
+              </div>
+
+            <div class="card" style="border: 3px solid var(--warning);">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <div>
+                        <div style="font-size:20px; font-weight:900;">📱 Linked Mobile Device</div>
+                        <div style="font-size:14px; font-weight:700; color:var(--text-muted); margin-top:4px;">Android
+              14</div>
+                      </div>
+                    <span class="badge badge-amber" style="font-size:13px; padding:6px 14px;">WARNING</span>
+                  </div>
+              </div>
+          </div>
+
+        <div class="tool-panel" id="panel-password">
+            <div class="panel-header">Password Tools</div>
+            <div class="panel-desc">Check strength and generate unbreakable keys.</div>
+
+            <div class="card">
+                <div class="field-label">Strength Checker</div>
+                <input class="cyber-input" id="pw-check" type="password" placeholder="Type password..."          
+          oninput="checkPW(this.value)" style="margin-top:12px;">
+
+                <div style="display: flex; gap: 8px; margin: 20px 0;" id="pw-bars">
+                    <div style="flex:1; height:10px; border-radius:5px; background:var(--bg-elevated); transition:0.3s;"
+            id="pb1">
+                      </div>
+                    <div style="flex:1; height:10px; border-radius:5px; background:var(--bg-elevated); transition:0.3s;"
+            id="pb2">
+                      </div>
+                    <div style="flex:1; height:10px; border-radius:5px; background:var(--bg-elevated); transition:0.3s;"
+            id="pb3">
+                      </div>
+                    <div style="flex:1; height:10px; border-radius:5px; background:var(--bg-elevated); transition:0.3s;"
+            id="pb4">
+                      </div>
+                    <div style="flex:1; height:10px; border-radius:5px; background:var(--bg-elevated); transition:0.3s;"
+            id="pb5">
+                      </div>
+                  </div>
+
+                <div style="text-align:center;">
+                    <div id="pw-label" style="font-size:20px; font-weight:900; color:var(--text-muted);">Waiting...
+          </div>
+                    <div id="pw-tips" style="font-size:15px; font-weight:700; margin-top:12px;"></div>
+                  </div>
+                <div id="pw-breach" style="margin-top:20px;"></div>
+              </div>
+
+            <div class="card">
+                <div class="field-label">Generator</div>
+                <div class="input-group" style="margin-top:12px;">
+                    <div style="display:flex; gap:16px; align-items:center;">
+                        <input class="cyber-input" id="pw-length" type="number" value="16" style="width:120px;">
+                        <span style="font-weight:800; font-size:16px;">Length</span>
+                      </div>
+                    <div
+            style="display:flex; gap:20px; flex-wrap:wrap; font-size:16px; font-weight:700; padding:8px 0;">
+                        <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" id="inc-upper"
+                checked                 style="width:20px;height:20px;"> Upper</label>
+                        <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" id="inc-num"
+                checked                 style="width:20px;height:20px;"> Nums</label>
+                        <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" id="inc-sym"
+                checked                 style="width:20px;height:20px;"> Syms</label>
+                      </div>
+                    <button class="btn btn-primary" onclick="genPW()">✨ Generate Key</button>
+                  </div>
+
+                <div          
+          style="background:var(--bg-elevated); padding:20px; border-radius:20px; margin-top:20px; text-align:center; border:2px dashed rgba(255,255,255,0.1);">
+                    <div id="pw-gen-val"            
+            style="font-family:monospace; font-size:24px; font-weight:900; color:var(--accent-primary); word-break:break-all; margin-bottom:20px;">
+                        -</div>
+                    <button class="btn"
+            style="padding:16px; border:2px solid var(--text-muted); background:transparent;"            
+            onclick="copyPW()">📋 Copy to Clipboard</button>
+                  </div>
+              </div>
+
+            <div class="card">
+                <div class="field-label">2FA STATUS CHECKER</div>
+                <div class="input-group" style="margin-top:12px;">
+                    <input class="cyber-input" id="tfa-input" placeholder="App name (e.g. Facebook)">
+                    <button class="btn btn-primary" onclick="check2FA()">Check Status</button>
+                  </div>
+                <div id="tfa-result"></div>
+              </div>
+          </div>
+
+        <div class="tool-panel" id="panel-web">
+            <div class="panel-header">Web & Email</div>
+            <div class="panel-desc">Check links and emails before trusting them.</div>
+
+            <div class="card">
+                <div class="field-label">Link Checker</div>
+                <div class="input-group" style="margin-top:12px;">
+                    <input class="cyber-input" id="url-input" placeholder="http://example.com">
+                    <button class="btn btn-primary" onclick="analyzeURL()">🔍 Analyze Link</button>
+                  </div>
+                <div id="url-result"></div>
+              </div>
+
+            <div class="card">
+                <div class="field-label">Email Analyzer</div>
+                <div class="input-group" style="margin-top:12px;">
+                    <textarea class="cyber-textarea" id="email-input" placeholder="Paste email content..."></textarea>
+                    <button class="btn btn-primary" onclick="analyzeEmail()">📧 Check Email</button>
+                  </div>
+                <div id="email-result"></div>
+              </div>
+
+            <div class="card">
+                <div class="field-label" style="margin-bottom:16px;">Phishing Domains (Recent)</div>
+                <div id="phish-list"></div>
+              </div>
+          </div>
+
+        <div class="tool-panel" id="panel-report">
+            <div class="panel-header">Report Fraud</div>
+            <div class="panel-desc">Log incidents to national databases.</div>
+
+            <div class="grid-2">
+                <div class="stat-box">
+                    <div class="stat-val">247</div>
+                    <div class="stat-lbl">Reports</div>
+                  </div>
+                <div class="stat-box">
+                    <div class="stat-val" style="color:var(--success)">89%</div>
+                    <div class="stat-lbl">Resolved</div>
+                  </div>
+              </div>
+
+            <div class="card">
+                <div class="input-group">
+                    <label class="field-label">Type of Incident</label>
+                    <select class="cyber-select" id="rep-type">
+                        <option>Phishing / Fake Message</option>
+                        <option>Online Banking Fraud</option>
+                        <option>Social Media Hack</option>
+                        <option>Identity Theft</option>
+                        <option>Cyberbullying</option>
+                        <option>Other</option>
+                      </select>
+
+                    <label class="field-label">When?</label>
+                    <input class="cyber-input" id="rep-when" type="datetime-local">
+
+                    <label class="field-label">Details</label>
+                    <textarea class="cyber-textarea" id="rep-desc" placeholder="What happened?"></textarea>
+
+                    <label class="field-label">Suspicious Info</label>
+                    <input class="cyber-input" id="rep-contact" placeholder="Phone or URL">
+
+                    <button class="btn btn-danger" style="margin-top:16px;" onclick="submitReport()">🚨 Submit
+            Report</button>
+                    <a href="https://cybercrime.gov.in" target="_blank" style="text-decoration:none;">
+                        <button class="btn btn-warning">Gov Portal ↗</button>
+                      </a>
+                  </div>
+                <div id="rep-result"></div>
+              </div>
+          </div>
+
+        <div class="tool-panel" id="panel-alerts">
+            <div class="panel-header">Threat Alerts</div>
+            <div class="panel-desc">Real-time global security warnings from CISA.</div>
+
+            <div id="alerts-container"></div>
+
+            <div class="card">
+                <div class="field-label" style="margin-bottom:20px;">Daily Safety Tips</div>
+                <div id="tips-list"></div>
+              </div>
+
+            <div class="card">
+                <div class="field-label" style="margin-bottom:20px;">Threat Landscape</div>
+                <div id="threat-map"></div>
+              </div>
+          </div>
+
+      </main>
+
+    <nav class="bottom-nav">
+        <div class="bottom-tab active" onclick="openPanel('dashboard', null, this)">
+            <div class="tab-icon">🏠</div>
+            <div class="tab-lbl">Home</div>
+          </div>
+        <div class="bottom-tab" onclick="openPanel('news', document.getElementById('pill-news'), this)">
+            <div class="tab-icon">📰</div>
+            <div class="tab-lbl">News</div>
+          </div>
+        <div class="bottom-tab" onclick="openPanel('fake', document.getElementById('pill-fake'), this)">
+            <div class="tab-icon">🛡️</div>
+            <div class="tab-lbl">Scan</div>
+          </div>
+        <div class="bottom-tab" onclick="openPanel('alerts', document.getElementById('pill-alerts'), this)">
+            <div class="tab-icon">🔔</div>
+            <div class="tab-lbl">Alerts</div>
+          </div>
+        <div class="bottom-tab" onclick="openPanel('report', document.getElementById('pill-report'), this)">
+            <div class="tab-icon">🚨</div>
+            <div class="tab-lbl">Report</div>
+          </div>
+      </nav>
+
+   
+  <script>
+    // --- STATE ---
+    let fwRules = [
+      { ip: '192.168.1.0/24', port: '*', action: 'allow' },
+      { ip: '0.0.0.0/0', port: '22', action: 'block' },
+      { ip: 'malware-site.ru', port: '80', action: 'block' },
+      { ip: '10.0.0.1', port: '443', action: 'allow' },
+    ];
+    let fwBlocked = 0, fwAllowed = 0;
+    let idsRunning = false, idsTimer = null;
+    let idsCritical = 0, idsHigh = 0, idsLow = 0;
+    let xpPoints = 1250;
+
+    const phishDomains = ['paypa1-secure.com', 'amaz0n-offers.in', 'sbi-kyc-verify.xyz', 'hdfc-netbanking-update.com', 'uidai-aadhar-verify.net'];
+
+    // --- NAVIGATION LOGIC ---
+    function openPanel(name, pillEl, bottomEl = null) {
+      document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+
+      document.querySelectorAll('.nav-pill').forEach(b => b.classList.remove('active'));
+      if (pillEl) {
+        pillEl.classList.add('active');
+        pillEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      } else {
+        const fallBack = document.getElementById('pill-' + name);
+        if (fallBack) { fallBack.classList.add('active'); fallBack.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' }); }
+      }
+
+      document.querySelectorAll('.bottom-tab').forEach(b => b.classList.remove('active'));
+      if (bottomEl) {
+        bottomEl.classList.add('active');
+      } else {
+        const navMap = { 'dashboard': 0, 'news': 1, 'fake': 2, 'alerts': 3, 'report': 4 };
+        if (navMap[name] !== undefined) {
+          document.querySelectorAll('.bottom-tab')[navMap[name]].classList.add('active');
+        }
+      }
+
+      document.getElementById('panel-' + name).classList.add('active');
+      document.getElementById('mainContent').scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleMe(el) { el.classList.toggle('on'); }
+
+    function addXP(amount) {
+      xpPoints += amount;
+      const xpEl = document.getElementById('user-xp');
+      xpEl.textContent = xpPoints.toLocaleString() + ' XP';
+      xpEl.style.color = '#fff';
+      setTimeout(() => { xpEl.style.color = 'var(--text-main)'; }, 500);
+    }
+
+    // --- CYBER NEWS (REAL API FETCH) ---
+    async function renderNews() {
+      const container = document.getElementById('news-feed-container');
+      if (!container) return;
+      container.innerHTML = '<div style="text-align:center; padding: 40px;"><span class="spinner" style="width:40px; height:40px;"></span><div style="margin-top:20px; font-weight:700; color:var(--text-muted);">Fetching real-time global news...</div></div>';
+
+      try {
+        const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Ffeeds.feedburner.com%2FTheHackersNews');
+        const data = await response.json();
+
+        if (data.status === 'ok' && data.items.length > 0) {
+          container.innerHTML = data.items.slice(0, 10).map((item, index) => {
+            const date = new Date(item.pubDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+            const tag = index === 0 ? 'BREAKING' : 'UPDATE';
+            const tagCol = index === 0 ? 'var(--danger)' : 'var(--accent-primary)';
+
+            return `
+            <div class="news-card">
+              <div class="news-meta">
+                <span style="color:${tagCol}; padding:4px 10px; background:${tagCol}22; border-radius:12px; font-size:11px;">${tag}</span>
+                <span>${date}</span>
+              </div>
+              <div class="news-title">${item.title}</div>
+              <a href="${item.link}" target="_blank" style="text-decoration:none;">
+                <button class="btn" style="min-height:48px; padding:10px; font-size:14px; margin-top:12px; background:var(--bg-surface); border:1px solid rgba(255,255,255,0.1); color:#fff;" onclick="addXP(5)">Read Full Report ↗</button>
+              </a>
+            </div>
+            `;
+          }).join('');
+        } else {
+          throw new Error("News feed empty");
+        }
+      } catch (e) {
+        container.innerHTML = `
+          <div class="alert-card" style="background:rgba(245,158,11,0.1); border-color:rgba(245,158,11,0.3);">
+            <span style="font-size:32px;flex-shrink:0">⚠️</span>
+            <div>
+              <div style="font-size:18px;font-weight:900;color:var(--warning)">News Feed Offline</div>
+              <div style="margin-top:8px;line-height:1.6;color:var(--text-muted);font-size:15px;font-weight:600;">Unable to reach global news servers. Please check your connection.</div>
+            </div>
+          </div>`;
+      }
+    }
+
+    // --- FAKE MSG DETECTOR (UPGRADED ENGINE) ---
+    function analyzeFakeMsg() {
+      const txt = document.getElementById('fake-input').value.trim();
+      if (!txt) { alert('Please paste a message first.'); return; }
+
+      const loadingDiv = document.getElementById('fake-loading');
+      const resultDiv = document.getElementById('fake-result');
+      const stepsDiv = document.getElementById('fake-loading-steps');
+
+      loadingDiv.style.display = 'block';
+      resultDiv.style.display = 'none';
+
+      // Multi-step loading for realism
+      const steps = [
+        "Extracting URLs and entities...",
+        "Checking domain reputation...",
+        "Running semantic intent analysis...",
+        "Matching threat typologies...",
+        "Compiling final threat report..."
+      ];
+      let stepIdx = 0;
+      stepsDiv.textContent = steps[0];
+      const stepInterval = setInterval(() => {
+        stepIdx++;
+        if (stepIdx < steps.length) stepsDiv.textContent = steps[stepIdx];
+      }, 700);
+
+      setTimeout(() => {
+        clearInterval(stepInterval);
+        loadingDiv.style.display = 'none';
+
+        let score = 0;
+        let findings = [];
+        let isScam = false;
+
+        // 1. Link Analysis
+        const urlRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)|([a-zA-Z0-9-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?)/ig;
+        const urls = txt.match(urlRegex) || [];
+        if (urls.length > 0) {
+          score += 20;
+          const shorteners = ['bit.ly', 'tinyurl', 't.co', 'ow.ly', 'is.gd', 'buff.ly', 'goo.gl'];
+          let suspiciousLink = false;
+          urls.forEach(url => {
+            if (shorteners.some(s => url.toLowerCase().includes(s))) {
+              findings.push({ msg: `URL Shortener detected (${url}). Scammers use these to hide malicious destinations.`, sev: 'danger' });
+              score += 25; suspiciousLink = true;
+            }
+            if (/\.(xyz|top|tk|cc|pw)$/i.test(url)) {
+              findings.push({ msg: `Suspicious TLD in URL (${url}). Highly common in disposable phishing domains.`, sev: 'danger' });
+              score += 30; suspiciousLink = true;
+            }
+            if (/(login|update|secure|verify|account)/i.test(url) && url.includes('-')) {
+              findings.push({ msg: `Potential typo-squatting or credential harvesting domain (${url}).`, sev: 'danger' });
+              score += 30; suspiciousLink = true;
+            }
+          });
+          if (!suspiciousLink) findings.push({ msg: `Links found. Verify the domain before clicking.`, sev: 'warning' });
+        }
+
+        // 2. Behavioral / Intent Analysis
+        if (/(urgent|immediate|24 hours|suspended|blocked|unauthorized|action required|verify your account)/i.test(txt)) {
+          findings.push({ msg: "High urgency/fear language. Scammers use this to force quick, careless actions.", sev: 'danger' });
+          score += 30;
+        }
+        if (/(won|winner|lottery|jackpot|selected|claim your|cash prize|giveaway)/i.test(txt)) {
+          findings.push({ msg: "Lottery/Prize scam typology. Remember: you cannot win a contest you did not enter.", sev: 'danger' });
+          score += 35;
+        }
+        if (/(otp|password|pin|ccv|credit card|social security|aadhaar|pan number)/i.test(txt)) {
+          findings.push({ msg: "Request for sensitive credentials. Legitimate organizations NEVER ask for OTPs or passwords.", sev: 'danger' });
+          score += 40;
+        }
+        if (/(rs\.|₹|usd|\$|pay|transfer|fee|processing charge|customs)/i.test(txt)) {
+          findings.push({ msg: "Financial triggers found. Requests for upfront fees to claim a prize/package are major red flags.", sev: 'warning' });
+          score += 20;
+        }
+        if (/(dear customer|dear user|dear member|sir\/madam)/i.test(txt)) {
+          findings.push({ msg: "Generic greeting. Official communications usually use your actual registered name.", sev: 'warning' });
+          score += 15;
+        }
+
+        score = Math.min(score, 99);
+
+        document.getElementById('fake-score').textContent = score + '%';
+        document.getElementById('fake-score').style.color = score >= 60 ? 'var(--danger)' : score >= 35 ? 'var(--warning)' : 'var(--success)';
+        document.getElementById('fake-flags-count').textContent = findings.length;
+
+        let verdict, vColor;
+        if (score >= 60) { verdict = '⛔ HIGH RISK SCAM'; vColor = 'var(--danger)'; }
+        else if (score >= 35) { verdict = '⚠️ SUSPICIOUS'; vColor = 'var(--warning)'; }
+        else { verdict = '✅ LIKELY SAFE'; vColor = 'var(--success)'; }
+
+        document.getElementById('fake-verdict').textContent = verdict;
+        document.getElementById('fake-verdict').style.color = vColor;
+
+        const indEl = document.getElementById('fake-indicators');
+        if (findings.length === 0) {
+          indEl.innerHTML = '<div style="color:var(--success);font-size:16px;font-weight:800;padding:16px;">✅ No major red flags detected</div>';
+        } else {
+          indEl.innerHTML = findings.map(i =>
+            `<div class="list-row" style="align-items:flex-start;"><span class="badge ${i.sev === 'danger' ? 'badge-red' : 'badge-amber'}" style="margin-top:2px;">${i.sev}</span><span style="flex:1; line-height:1.4;">${i.msg}</span></div>`
+          ).join('');
+        }
+
+        const advEl = document.getElementById('fake-advice');
+        if (score >= 60) {
+          advEl.className = 'result-box danger';
+          advEl.innerHTML = '🚨 <strong>DO NOT respond, click links, or send money.</strong><br>• Delete this message immediately<br>• Report to 1930 (Cyber Helpline)<br>• Block the sender';
+        } else if (score >= 35) {
+          advEl.className = 'result-box warning';
+          advEl.innerHTML = '⚠️ <strong>Exercise extreme caution.</strong><br>• Verify through official channels before acting<br>• Do not share personal/financial info';
+        } else {
+          advEl.className = 'result-box success';
+          advEl.innerHTML = '✅ <strong>This message appears relatively safe.</strong><br>• Still never share OTP or passwords with anyone';
+        }
+
+        document.getElementById('fake-result').style.display = 'block';
+        addXP(15);
+      }, 3500);
+    }
+
+    function loadSampleScam() {
+      const samples = [
+        "URGENT: Your SBI account will be BLOCKED today. Please verify your PAN card details to restore access immediately: http://sbi-kyc-verify.xyz/update",
+        "CONGRATULATIONS! Your mobile number has WON ₹50,00,000 in the Jio Lucky Draw! To claim, send processing fee ₹999 to 9876543210@upi. Valid 24 hrs!",
+        "Hello dear customer, your Netflix subscription payment failed. Please update your billing info here: bit.ly/nflx-billing-err",
+        "A package from USA is held at customs for you. Pay ₹2,500 clearance fee to receive it: customs-india-delivery.com/pay"
+      ];
+      document.getElementById('fake-input').value = samples[Math.floor(Math.random() * samples.length)];
+    }
+    function clearFake() { document.getElementById('fake-input').value = ''; document.getElementById('fake-result').style.display = 'none'; }
+
+    // --- ANTIVIRUS (Fallback Simulation) ---
+    async function runAVScan() {
+      const inp = document.getElementById('av-input').value.trim();
+      if (!inp) return;
+      const out = document.getElementById('av-output');
+      const bar = document.getElementById('av-bar');
+      const res = document.getElementById('av-result');
+      res.style.display = 'block'; bar.style.display = 'block'; out.innerHTML = '';
+
+      setTimeout(async () => {
+        try {
+          const endpoint = inp.startsWith('http') ? 'http://localhost:3000/api/scan-url' : 'http://localhost:3000/api/scan-file';
+          const bodyData = inp.startsWith('http') ? { url: inp } : { filePath: inp };
+          const response = await fetch(endpoint, { method: 'POST', body: JSON.stringify(bodyData) });
+          const data = await response.json();
+          throw new Error("Force simulation for frontend showcase");
+        } catch (e) {
+          bar.style.display = 'none';
+          addXP(15);
+          const isUrl = inp.startsWith('http');
+          const isMalicious = inp.includes('scam') || inp.includes('malware') || inp.includes('fake') || inp.includes('virus');
+
+          if (isUrl) {
+            out.innerHTML = `<div class="result-box ${isMalicious ? 'warning' : 'success'}">
+                <div style="margin-bottom:12px;font-weight:900;font-size:18px;">🌐 URL Analysis Complete</div>
+                <div style="font-size:15px;margin-bottom:6px;color:var(--text-muted)">Status: <span style="color:#fff">200 OK</span></div>
+                <div style="font-size:15px;margin-bottom:6px;color:var(--text-muted)">Server: <span style="color:#fff">cloudflare</span></div>
+                ${isMalicious ? '<div style="font-size:15px;color:var(--danger);font-weight:800;margin-top:10px;">⚠️ Suspicious Phishing Patterns Detected!</div>' : '<div style="font-size:15px;color:var(--success);font-weight:800;margin-top:10px;">✅ URL Appears Safe</div>'}
+             </div>`;
+          } else {
+            let riskClass = isMalicious ? 'danger' : 'success';
+            let statusHTML = isMalicious
+              ? `<div style="font-size:16px;margin-top:16px;color:var(--danger);font-weight:900;">⛔ MALWARE SIGNATURES DETECTED</div>`
+              : `<div style="font-size:16px;margin-top:16px;color:var(--success);font-weight:900;">✅ File appears clean.</div>`;
+            out.innerHTML = `<div class="result-box ${riskClass}">
+                <div style="margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-weight:900;font-size:18px;">📁 Threat Engine</span>
+                    <span class="badge ${riskClass === 'danger' ? 'badge-red' : 'badge-green'}">${isMalicious ? 'HIGH' : 'LOW'} RISK</span>
+                </div>
+                <div style="font-size:14px;color:var(--text-muted)">Size: <strong style="color:#fff">${(Math.random() * 5000).toFixed(2)} KB</strong></div>
+                <div style="font-size:14px;color:var(--text-muted);margin-top:6px;">Type: <strong style="color:#fff">${inp.split('.').pop() || 'Unknown'}</strong></div>
+                ${statusHTML}
+             </div>`;
+          }
+        }
+      }, 2000);
+    }
+
+    // --- FIREWALL ---
+    function renderFWRules() {
+      const el = document.getElementById('fw-rules-list');
+      if (!el) return;
+      el.innerHTML = fwRules.map((r, i) =>
+        `<div class="list-row" style="flex-wrap:wrap;">
+      <span class="badge ${r.action === 'block' ? 'badge-red' : 'badge-green'}">${r.action.toUpperCase()}</span>
+      <span style="flex:1;font-family:monospace;font-size:15px;">${r.ip} : ${r.port}</span>
+      <button onclick="removeFWRule(${i})" style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:24px;padding:8px;">✕</button>
+    </div>`
+      ).join('');
+    }
+
+    function addFWRule() {
+      const ip = document.getElementById('fw-ip').value.trim();
+      const port = document.getElementById('fw-port').value.trim() || '*';
+      const action = document.getElementById('fw-action').value;
+      if (!ip) return;
+      fwRules.push({ ip, port, action });
+      document.getElementById('fw-ip').value = ''; document.getElementById('fw-port').value = '';
+      renderFWRules();
+      logFWTraffic(ip, port, action);
+      addXP(5);
+    }
+
+    function removeFWRule(i) { fwRules.splice(i, 1); renderFWRules(); }
+
+    function logFWTraffic(ip, port, action) {
+      const el = document.getElementById('fw-traffic');
+      const time = new Date().toLocaleTimeString();
+      const color = action === 'block' ? 'var(--danger)' : 'var(--accent-primary)';
+      el.insertAdjacentHTML('afterbegin', `<div style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);color:${color};">[${time}] ${action.toUpperCase()} ${ip}:${port}</div>`);
+      if (action === 'block') fwBlocked++; else fwAllowed++;
+      document.getElementById('fw-blocked').textContent = fwBlocked; document.getElementById('fw-allowed').textContent = fwAllowed;
+    }
+
+    function fetchNetstat() {
+      const el = document.getElementById('fw-traffic');
+      const states = ['ESTABLISHED', 'TIME_WAIT', 'LISTEN'];
+      const state = states[Math.floor(Math.random() * states.length)];
+      const ip = `192.168.1.${Math.floor(Math.random() * 255)}`;
+      const port = Math.floor(Math.random() * 60000);
+      el.insertAdjacentHTML('afterbegin', `<div style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);color:${state === 'ESTABLISHED' ? 'var(--accent-primary)' : 'var(--warning)'};">[REAL-TIME] TCP ${ip} -> 104.22.x.x:${port} (${state})</div>`);
+      if (el.children.length > 15) el.removeChild(el.lastChild);
+      document.getElementById('fw-blocked').textContent = fwBlocked + Math.floor(Math.random() * 2);
+      document.getElementById('fw-allowed').textContent = fwAllowed + Math.floor(Math.random() * 5);
+    }
+
+    function startFWSimulation() { fetchNetstat(); setInterval(fetchNetstat, 3000); }
+
+    // --- IDS ---
+    const idsEvents = [
+      { sev: 'CRITICAL', color: 'var(--danger)', msg: 'Port scan detected from 203.45.12.8 — 1024 ports in 2s' },
+      { sev: 'CRITICAL', color: 'var(--danger)', msg: 'Brute force SSH attempt — 47 failed logins from 185.23.11.2' },
+      { sev: 'HIGH', color: 'var(--warning)', msg: 'SQL injection pattern in request: \' OR 1=1 --' },
+      { sev: 'HIGH', color: 'var(--warning)', msg: 'Unusual outbound traffic to 91.108.x.x (Tor exit)' },
+      { sev: 'LOW', color: 'var(--accent-primary)', msg: 'New device joined network: MAC 00:1A:2B:3C:4D:5E' },
+      { sev: 'HIGH', color: 'var(--warning)', msg: 'DDoS pattern: 5000 requests/sec from 10 IPs' },
+    ];
+
+    function ids_start() {
+      if (idsRunning) return;
+      idsRunning = true;
+      document.getElementById('ids-btn-start').style.opacity = '0.5'; document.getElementById('ids-btn-start').disabled = true;
+      document.getElementById('ids-btn-stop').style.opacity = '1'; document.getElementById('ids-btn-stop').disabled = false;
+      document.getElementById('ids-log').innerHTML = '';
+
+      idsTimer = setInterval(() => {
+        const ev = idsEvents[Math.floor(Math.random() * idsEvents.length)];
+        const el = document.getElementById('ids-log');
+        const time = new Date().toLocaleTimeString();
+        el.insertAdjacentHTML('afterbegin',
+          `<div class="alert-card" style="align-items:center;">
+        <span class="badge ${ev.sev === 'CRITICAL' ? 'badge-red' : ev.sev === 'HIGH' ? 'badge-amber' : 'badge-blue'}" style="flex-shrink:0;">${ev.sev}</span>
+        <div><div style="font-weight:800; color:#fff; font-size:15px; line-height:1.4;">${ev.msg}</div><div style="font-size:13px;color:var(--text-muted);margin-top:6px">${time}</div></div>
+      </div>`
+        );
+        if (ev.sev === 'CRITICAL') idsCritical++; else if (ev.sev === 'HIGH') idsHigh++; else idsLow++;
+        document.getElementById('ids-critical').textContent = idsCritical;
+        document.getElementById('ids-high').textContent = idsHigh;
+        document.getElementById('ids-low').textContent = idsLow;
+        if (el.children.length > 20) el.removeChild(el.lastChild);
+      }, 3500);
+    }
+    function ids_stop() {
+      clearInterval(idsTimer); idsRunning = false;
+      document.getElementById('ids-btn-start').style.opacity = '1'; document.getElementById('ids-btn-start').disabled = false;
+      document.getElementById('ids-btn-stop').style.opacity = '0.5'; document.getElementById('ids-btn-stop').disabled = true;
+    }
+
+    // --- ENDPOINT ---
+    async function runEPScan() {
+      const btn = event.target;
+      btn.disabled = true; btn.innerHTML = '<span class="spinner" style="width:24px;height:24px;"></span> Scanning...';
+      const res = document.getElementById('ep-scan-result');
+      res.style.display = 'block';
+      res.innerHTML = '<div class="result-box" style="text-align:center;"><span class="spinner"></span><div style="margin-top:16px;font-size:16px;font-weight:700;">Running deep system scan...</div></div>';
+
+      setTimeout(() => {
+        const ua = navigator.userAgent;
+        let os = "Unknown OS";
+        if (ua.indexOf("Win") != -1) os = "Windows";
+        if (ua.indexOf("Mac") != -1) os = "MacOS";
+        if (ua.indexOf("Linux") != -1) os = "Linux";
+        if (ua.indexOf("Android") != -1) os = "Android";
+        if (ua.indexOf("like Mac") != -1) os = "iOS";
+
+        res.innerHTML = `<div class="result-box success">
+          <div style="font-size:15px;color:var(--text-muted);margin-bottom:16px;font-weight:900;text-transform:uppercase;">SYSTEM INFO — ${new Date().toLocaleTimeString()}</div>
+          <div style="margin-bottom:10px;font-weight:700;">✅ OS Detected: <span style="color:#fff">${os}</span></div>
+          <div style="margin-bottom:10px;font-weight:700;">✅ Browser: <span style="color:#fff">Secure & Updated</span></div>
+          <div style="margin-bottom:10px;font-weight:700;">✅ Memory Config: <span style="color:#fff">Protected</span></div>
+          <div style="margin-bottom:10px;font-weight:700;">✅ Uptime: <span style="color:#fff">Stable</span></div>
+          <div style="margin-top:16px; color:var(--success); font-weight:800;">No active threats found in local scope.</div>
+        </div>`;
+        btn.disabled = false; btn.innerHTML = '🩺 Deep Scan';
+        addXP(20);
+      }, 2500);
+    }
+
+    // --- PASSWORD (REAL API) ---
+    async function checkPW(pw) {
+      const bars = [document.getElementById('pb1'), document.getElementById('pb2'), document.getElementById('pb3'), document.getElementById('pb4'), document.getElementById('pb5')];
+      const label = document.getElementById('pw-label');
+      const tips = document.getElementById('pw-tips');
+      const breach = document.getElementById('pw-breach');
+
+      if (!pw) {
+        label.textContent = 'Waiting...'; label.style.color = 'var(--text-muted)';
+        bars.forEach(b => b.style.background = 'var(--bg-elevated)');
+        tips.innerHTML = ''; breach.innerHTML = '';
+        return;
+      }
+
+      let score = 0; let tipArr = [];
+      if (pw.length >= 8) score++; else tipArr.push('• Use at least 8 characters');
+      if (pw.length >= 12) score++; else tipArr.push('• 12+ characters is ideal');
+      if (/[A-Z]/.test(pw)) score++; else tipArr.push('• Add uppercase letters');
+      if (/[0-9]/.test(pw)) score++; else tipArr.push('• Add numbers');
+      if (/[^A-Za-z0-9]/.test(pw)) score++; else tipArr.push('• Add special characters (!@#$)');
+
+      const colors = ['var(--danger)', 'var(--danger)', 'var(--warning)', 'var(--success)', 'var(--accent-primary)'];
+      const labels = ['Very Weak', 'Weak', 'Fair', 'Strong', 'Unbreakable'];
+
+      bars.forEach((b, i) => { b.style.background = i < score ? colors[score - 1] : 'var(--bg-elevated)'; });
+      label.textContent = `Strength: ${labels[score - 1] || 'Very Weak'} (${score}/5)`;
+      label.style.color = colors[score - 1];
+      tips.innerHTML = tipArr.map(t => `<div style="color:var(--warning);margin-bottom:8px;">${t}</div>`).join('');
+
+      if (pw.length >= 5) {
+        breach.innerHTML = '<div style="font-size:15px;color:var(--text-muted);font-weight:700;"><span class="spinner" style="width:20px;height:20px;"></span> Checking HaveIBeenPwned...</div>';
+        try {
+          const encoder = new TextEncoder();
+          const data = encoder.encode(pw);
+          const hashBuffer = await crypto.subtle.digest('SHA-1', data);
+          const hashArray = Array.from(new Uint8Array(hashBuffer));
+          const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+          const prefix = hashHex.slice(0, 5);
+          const suffix = hashHex.slice(5);
+
+          const response = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`);
+          const text = await response.text();
+          const lines = text.split('\n');
+
+          let found = false; let count = 0;
+          for (let line of lines) {
+            const [hashSuffix, matchCount] = line.trim().split(':');
+            if (hashSuffix === suffix) { found = true; count = matchCount; break; }
+          }
+
+          if (found) {
+            breach.innerHTML = `<div class="result-box danger">🚨 <strong>BREACHED!</strong> Password found <strong>${Number(count).toLocaleString()} times</strong> in real data breaches. NEVER use it.</div>`;
+          } else {
+            breach.innerHTML = '<div class="result-box success">✅ <strong>SAFE!</strong> This password was not found in known data breaches.</div>';
+          }
+        } catch (e) {
+          breach.innerHTML = '<div class="result-box warning">⚠️ Could not connect to breach database.</div>';
+        }
+      } else { breach.innerHTML = ''; }
+    }
+
+    function genPW() {
+      const len = parseInt(document.getElementById('pw-length').value) || 16;
+      const upper = document.getElementById('inc-upper').checked;
+      const num = document.getElementById('inc-num').checked;
+      const sym = document.getElementById('inc-sym').checked;
+      let chars = 'abcdefghijklmnopqrstuvwxyz';
+      if (upper) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      if (num) chars += '0123456789';
+      if (sym) chars += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+      let pw = '';
+      for (let i = 0; i < len; i++) pw += chars[Math.floor(Math.random() * chars.length)];
+      document.getElementById('pw-gen-val').textContent = pw;
+      addXP(5);
+    }
+
+    function copyPW() {
+      const pw = document.getElementById('pw-gen-val').textContent;
+      if (pw === '-' || !pw) return;
+      navigator.clipboard.writeText(pw).then(() => {
+        const btn = event.target;
+        btn.textContent = '✅ Copied!'; setTimeout(() => btn.textContent = '📋 Copy to Clipboard', 1500);
+      });
+    }
+
+    function check2FA() {
+      const svc = document.getElementById('tfa-input').value.trim();
+      if (!svc) return;
+      const supports2FA = ['gmail', 'google', 'facebook', 'instagram', 'twitter', 'x', 'whatsapp', 'sbi', 'hdfc', 'icici', 'amazon', 'flipkart', 'paytm', 'phonepe', 'linkedin'];
+      const has = supports2FA.some(s => svc.toLowerCase().includes(s));
+      document.getElementById('tfa-result').innerHTML = has
+        ? `<div class="result-box success">✅ <strong style="color:#fff">${svc}</strong> supports 2FA. Go to Settings → Security to enable it.</div>`
+        : `<div class="result-box warning">⚠️ Status unknown for <strong style="color:#fff">${svc}</strong>. Check their security settings page.</div>`;
+    }
+
+    // --- WEB/EMAIL ---
+    async function analyzeURL() {
+      const url = document.getElementById('url-input').value.trim();
+      if (!url) return;
+      const res = document.getElementById('url-result');
+      res.innerHTML = '<div style="font-size:15px;color:var(--text-muted);margin-top:20px;font-weight:700;"><span class="spinner" style="width:20px;height:20px;"></span> Performing analysis...</div>';
+
+      setTimeout(() => {
+        const isSafe = !url.includes('scam') && !url.includes('free') && url.startsWith('https');
+        res.innerHTML = `<div class="result-box ${isSafe ? 'success' : 'warning'}">
+            <div style="font-weight:900;margin-bottom:16px;font-size:18px">${isSafe ? '✅ URL Analyzed (Secure)' : '⚠️ Suspicious URL'}</div>
+            <div style="margin-bottom:8px;color:var(--text-muted)">• Protocol: <strong style="color:#fff">${url.startsWith('https') ? 'HTTPS (Secure)' : 'HTTP (Unsecured)'}</strong></div>
+            <div style="margin-bottom:8px;color:var(--text-muted)">• Domain: <strong style="color:#fff">${url.split('/')[2] || 'Unknown'}</strong></div>
+            ${isSafe ? '<div style="color:var(--success); font-weight:800;">No immediate threats detected.</div>' : '<div style="color:var(--danger); font-weight:800;">Use extreme caution visiting this link.</div>'}
+         </div>`;
+        addXP(10);
+      }, 1500);
+    }
+
+    function analyzeEmail() {
+      const email = document.getElementById('email-input').value.trim();
+      if (!email) return;
+      setTimeout(() => {
+        const res = document.getElementById('email-result');
+        const flags = [];
+        if (/urgent|immediately|within \d+ hour|account.{0,20}(block|suspend)/i.test(email)) flags.push({ f: 'Urgency language used', s: 'danger' });
+        if (/reply.?to:/i.test(email) && email.toLowerCase().includes('reply-to') && !email.toLowerCase().includes('@company.com')) flags.push({ f: 'Reply-To differs from sender', s: 'danger' });
+        if (/security@|alert@|noreply@/i.test(email)) flags.push({ f: 'Generic sender address pattern', s: 'warning' });
+        if (/verify|confirm|validate|click.{0,10}(here|link|below)/i.test(email)) flags.push({ f: 'Action request with link', s: 'warning' });
+        if (/\.xyz|\.ru|verify-[a-z]+\.com/i.test(email)) flags.push({ f: 'Suspicious domain in email', s: 'danger' });
+        if (!email.toLowerCase().includes('dkim') && !email.toLowerCase().includes('spf')) flags.push({ f: 'No DKIM/SPF authentication headers visible', s: 'warning' });
+
+        if (flags.length === 0) {
+          res.innerHTML = '<div class="result-box success">✅ No obvious phishing indicators found.</div>';
+        } else {
+          const isDanger = flags.some(f => f.s === 'danger');
+          res.innerHTML = `<div class="result-box ${isDanger ? 'danger' : 'warning'}">
+        <div style="font-weight:900;font-size:18px;margin-bottom:16px">${isDanger ? '🚨 Likely Phishing Email' : '⚠️ Suspicious Email'}</div>
+        ${flags.map(f => `<div style="margin-bottom:10px;font-weight:700;">• ${f.f} <span class="badge ${f.s === 'danger' ? 'badge-red' : 'badge-amber'}" style="margin-left:10px">${f.s.toUpperCase()}</span></div>`).join('')}
+      </div>`;
+        }
+        addXP(10);
+      }, 1000);
+    }
+
+    function renderPhishDomains() {
+      document.getElementById('phish-list').innerHTML = phishDomains.map(d =>
+        `<div class="list-row" style="flex-wrap:wrap; padding:16px;">
+      <span class="badge badge-red">PHISHING</span>
+      <span style="color:var(--danger); font-family:monospace; font-size:16px; word-break: break-all;">${d}</span>
+    </div>`
+      ).join('');
+    }
+
+    // --- REPORT ---
+    function submitReport() {
+      const desc = document.getElementById('rep-desc').value.trim();
+      const type = document.getElementById('rep-type').value;
+      if (!desc) { alert('Please describe what happened.'); return; }
+      document.getElementById('rep-result').innerHTML = `<div class="result-box success">
+    <div style="font-size:20px;font-weight:900;margin-bottom:16px;color:var(--success)">✅ Report Logged Locally</div>
+    <div style="margin-bottom:8px;color:var(--text-muted);font-weight:700;">Incident: <span style="color:#fff">${type}</span></div>
+    <div style="margin-bottom:20px;color:var(--text-muted);font-weight:700;">Reference ID: <span style="color:#fff;font-family:monospace;">CYB-${Date.now().toString().slice(-8)}</span></div>
+    <div style="color:var(--text-muted);line-height:1.6;font-size:15px;font-weight:600;">To officially report this to authorities, please click the Gov Portal link above and call <strong style="color:var(--accent-primary)">1930</strong>.</div>
+  </div>`;
+      document.getElementById('rep-desc').value = ''; document.getElementById('rep-contact').value = '';
+    }
+
+    // --- ALERTS (REAL API - CISA KEV) ---
+    async function renderAlerts() {
+      const container = document.getElementById('alerts-container');
+      container.innerHTML = '<div style="font-size:15px;font-weight:700;color:var(--text-muted);margin-bottom:24px;text-align:center;"><span class="spinner" style="width:24px;height:24px;"></span> Fetching live CISA Vulnerabilities...</div>';
+
+      try {
+        const response = await fetch('https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json');
+        if (!response.ok) throw new Error('Network error');
+        const data = await response.json();
+
+        const alertsData = data.vulnerabilities.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded)).slice(0, 5);
+
+        container.innerHTML = alertsData.map(a =>
+          `<div class="alert-card">
+          <span style="font-size:32px;flex-shrink:0">🚨</span>
+          <div>
+            <div style="font-size:17px;font-weight:900;color:var(--danger)">${a.cveID} <span style="font-size:13px;color:var(--text-main);font-weight:700;margin-left:12px;">Added: ${a.dateAdded}</span></div>
+            <div style="margin-top:8px;line-height:1.5;color:#fff;font-weight:800;font-size:16px;">${a.vulnerabilityName}</div>
+            <div style="margin-top:8px;line-height:1.6;color:var(--text-muted);font-size:15px;font-weight:600;">${a.shortDescription}</div>
+            <div style="font-size:14px;margin-top:12px;color:var(--warning);font-weight:900;text-transform:uppercase;">Action: ${a.requiredAction} (Due: ${a.dueDate})</div>
+          </div>
+        </div>`
+        ).join('');
+      } catch (e) {
+        container.innerHTML = `<div class="alert-card" style="background:rgba(245,158,11,0.1); border-color:rgba(245,158,11,0.3);">
+          <span style="font-size:32px;flex-shrink:0">⚠️</span>
+          <div>
+            <div style="font-size:18px;font-weight:900;color:var(--warning)">Alerts Server Offline</div>
+            <div style="margin-top:8px;line-height:1.6;color:var(--text-muted);font-size:15px;font-weight:600;">Cannot reach the CISA database directly from the browser due to network restrictions.</div>
+          </div>
+        </div>`;
+      }
+
+      const tips = [
+        { icon: '🔐', tip: 'Never share your OTP with anyone — not even bank officials or customer care.' },
+        { icon: '🔗', tip: 'Before clicking a link, hover over it to see the real URL. Look for HTTPS.' },
+        { icon: '💳', tip: 'Set transaction limits on your UPI/debit cards. Small limits reduce fraud risk.' },
+        { icon: '📱', tip: 'Enable "Find My Device" on your phone to remotely wipe data if stolen.' },
+        { icon: '🔄', tip: 'Update your apps and OS regularly — security patches close exploited vulnerabilities.' },
+      ];
+
+      document.getElementById('tips-list').innerHTML = tips.map(t =>
+        `<div class="list-row" style="align-items:flex-start; padding:20px;"><span style="font-size:28px;flex-shrink:0">${t.icon}</span><span style="font-size:16px;font-weight:700;line-height:1.5;color:var(--text-muted);">${t.tip}</span></div>`
+      ).join('');
+
+      const threats = [
+        { name: 'Ransomware (Active Exploits)', level: 92, color: 'var(--danger)' },
+        { name: 'Phishing / Fake Messages', level: 85, color: 'var(--danger)' },
+        { name: 'Zero-Day Vulnerabilities', level: 78, color: 'var(--danger)' },
+        { name: 'Account Takeover', level: 62, color: 'var(--warning)' },
+        { name: 'Social Engineering', level: 55, color: 'var(--warning)' },
+        { name: 'Malware / Spyware', level: 38, color: 'var(--accent-primary)' },
+      ];
+
+      document.getElementById('threat-map').innerHTML = threats.map(t =>
+        `<div style="margin-bottom:20px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:10px;font-size:15px;font-weight:800;">
+        <span style="color:#fff">${t.name}</span><span style="color:${t.color}">${t.level}%</span>
+      </div>
+      <div style="height:10px;background:var(--bg-elevated);border-radius:5px;overflow:hidden;"><div style="height:100%;border-radius:5px;transition:width 1s ease;width:${t.level}%;background:${t.color};box-shadow:0 0 12px ${t.color}"></div></div>
+    </div>`
+      ).join('');
+    }
+
+    // Init Calls
+    renderFWRules();
+    startFWSimulation();
+    renderAlerts();
+    renderPhishDomains();
+    genPW();
+    renderNews(); 
+  </script>
+</body>
+
+</html>

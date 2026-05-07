@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CyberShield Ecosystem</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Grotesk:wght@700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        /* --- MOBILE-FIRST RESET & BASE --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            /* Removes tap highlight on mobile */
+        }
+
+        :root {
+            /* Core Theme Colors */
+            --bg-deep: #0B0E14;
+            --bg-surface: #151A23;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+
+            /* App Specific Colors */
+            --kids-color: #FFB020;
+            --kids-glow: rgba(255, 176, 32, 0.2);
+            --kids-btn: linear-gradient(135deg, #FFB020, #FF6B81);
+
+            --youth-color: #8B5CF6;
+            --youth-glow: rgba(139, 92, 246, 0.2);
+            --youth-btn: linear-gradient(135deg, #8B5CF6, #00E5FF);
+
+            --all-color: #10B981;
+            --all-glow: rgba(16, 185, 129, 0.2);
+            --all-btn: linear-gradient(135deg, #10B981, #3B82F6);
+
+            --font-body: 'Nunito', sans-serif;
+            --font-head: 'Space Grotesk', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 0% 0%, rgba(139, 92, 246, 0.08), transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(0, 229, 255, 0.08), transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* --- MOBILE APP HEADER --- */
+        .app-header {
+            padding: 30px 20px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .app-header h1 {
+            font-family: var(--font-head);
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, #00E5FF, #8B5CF6, #FFB020);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .app-header p {
+            color: var(--text-muted);
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.5;
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        /* --- LAUNCHER GRID (Mobile Single Column) --- */
+        .launcher-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 10px 20px 40px;
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* --- APP CARDS --- */
+        .app-card {
+            background: rgba(21, 26, 35, 0.7);
+            border: 2px solid rgba(255, 255, 255, 0.05);
+            border-radius: 28px;
+            padding: 24px;
+            text-decoration: none;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .app-card:active {
+            transform: scale(0.97);
+        }
+
+        .card-bg-glow {
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            filter: blur(50px);
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        /* Card Content (z-index pulls it above the background glow) */
+        .card-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .card-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .icon-box {
+            font-size: 48px;
+            line-height: 1;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+        }
+
+        .age-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .app-title {
+            font-family: var(--font-head);
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .app-desc {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.5;
+            font-weight: 600;
+            margin-bottom: 24px;
+            flex: 1;
+        }
+
+        .launch-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 18px;
+            border-radius: 18px;
+            font-family: var(--font-body);
+            font-weight: 800;
+            font-size: 16px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: filter 0.2s;
+            border: none;
+            min-height: 56px;
+            /* Huge touch target for mobile */
+        }
+
+        /* --- SPECIFIC CARD STYLES --- */
+
+        /* 1. Kids Playground */
+        #card-kids {
+            border-color: rgba(255, 176, 32, 0.15);
+        }
+
+        #card-kids .card-bg-glow {
+            background: var(--kids-color);
+        }
+
+        #card-kids .age-badge {
+            color: var(--kids-color);
+            border-color: rgba(255, 176, 32, 0.3);
+        }
+
+        #card-kids .launch-btn {
+            background: var(--kids-btn);
+            box-shadow: 0 4px 15px var(--kids-glow);
+        }
+
+        /* 2. Youth Academy */
+        #card-youth {
+            border-color: rgba(139, 92, 246, 0.15);
+        }
+
+        #card-youth .card-bg-glow {
+            background: var(--youth-color);
+        }
+
+        #card-youth .age-badge {
+            color: #D8B4FE;
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        #card-youth .launch-btn {
+            background: var(--youth-btn);
+            box-shadow: 0 4px 15px var(--youth-glow);
+        }
+
+        /* 3. Everyone Security Hub */
+        #card-all {
+            border-color: rgba(16, 185, 129, 0.15);
+        }
+
+        #card-all .card-bg-glow {
+            background: var(--all-color);
+        }
+
+        #card-all .age-badge {
+            color: var(--all-color);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        #card-all .launch-btn {
+            background: var(--all-btn);
+            box-shadow: 0 4px 15px var(--all-glow);
+        }
+
+        /* Hover States for Desktop (Not used on touch screens) */
+        @media (hover: hover) and (pointer: fine) {
+            .app-card:hover {
+                transform: translateY(-8px);
+            }
+
+            #card-kids:hover {
+                border-color: var(--kids-color);
+                box-shadow: 0 15px 35px var(--kids-glow);
+            }
+
+            #card-youth:hover {
+                border-color: var(--youth-color);
+                box-shadow: 0 15px 35px var(--youth-glow);
+            }
+
+            #card-all:hover {
+                border-color: var(--all-color);
+                box-shadow: 0 15px 35px var(--all-glow);
+            }
+
+            .launch-btn:hover {
+                filter: brightness(1.1);
+            }
+        }
+
+        /* --- DESKTOP ENHANCEMENTS --- */
+        @media (min-width: 768px) {
+            .app-header {
+                padding: 60px 20px 40px;
+            }
+
+            .app-header h1 {
+                font-size: 52px;
+                margin-bottom: 16px;
+            }
+
+            .app-header p {
+                font-size: 18px;
+            }
+
+            /* Switch to 3 columns on larger screens */
+            .launcher-grid {
+                flex-direction: row;
+                justify-content: center;
+                gap: 30px;
+                padding: 0 40px 60px;
+            }
+
+            .app-card {
+                flex: 1;
+                min-width: 300px;
+            }
+        }
+        /* Top Navigation */
+        .top-nav {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 12px;
+        }
+
+        .login-btn-top {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: #fff;
+            text-decoration: none;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .login-btn-top:hover {
+            background: rgba(30, 144, 255, 0.3);
+            border-color: #1E90FF;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-nav">
+        <a href="cybershield-academy.html#/profile" class="login-btn-top">👤 Profile</a>
+        <a href="login.html" class="login-btn-top">🔐 Agent Login</a>
+    </div>
+
+    <header class="app-header">
+        <h1>CyberShield Ecosystem</h1>
+        <p>Select your portal. A complete suite for cybersecurity education, real-time threat detection, and interactive
+            learning.</p>
+    </header>
+
+    <main class="launcher-grid">
+
+        <a href="http://localhost:8080" class="app-card" id="card-kids" target="_blank"
+           onclick="if(window.location.hostname!=='localhost'){this.href='/heroes';this.removeAttribute('target');}">
+            <div class="card-bg-glow"></div>
+            <div class="card-content">
+                <div class="card-header-row">
+                    <div class="icon-box">🦸‍♂️</div>
+                    <div class="age-badge">Ages 6-14</div>
+                </div>
+                <h2 class="app-title">Cyber Heroes Playground</h2>
+                <p class="app-desc">Step into Safety City! Play fun mini-games that teach you about passwords, phishing,
+                    and Wi-Fi safety. Earn Shield Coins! 🪙</p>
+                <div class="launch-btn">Play Now 🎮</div>
+            </div>
+        </a>
+
+        <a href="cybershield-academy.html" class="app-card" id="card-youth">
+            <div class="card-bg-glow"></div>
+            <div class="card-content">
+                <div class="card-header-row">
+                    <div class="icon-box">🎮</div>
+                    <div class="age-badge">Ages 15-30</div>
+                </div>
+                <h2 class="app-title">CyberShield Academy</h2>
+                <p class="app-desc">Level up your cyber skills! Take interactive certification courses, learn ethical
+                    hacking, and pass the Final Exam.</p>
+                <div class="launch-btn">Enter Academy 🚀</div>
+            </div>
+        </a>
+
+        <a href="cyber_safety_awareness_hub.html" class="app-card" id="card-all">
+            <div class="card-bg-glow"></div>
+            <div class="card-content">
+                <div class="card-header-row">
+                    <div class="icon-box">🛡️</div>
+                    <div class="age-badge">Everyone</div>
+                </div>
+                <h2 class="app-title">Security Hub Engine</h2>
+                <p class="app-desc">Your daily real-time threat detection dashboard. Scan URLs, check live OS metrics,
+                    monitor firewalls, and view CISA alerts.</p>
+                <div class="launch-btn">Launch Hub ⚡</div>
+            </div>
+        </a>
+
+    </main>
+
+</body>
+
+</html>

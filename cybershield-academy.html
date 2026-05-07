@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   
+  <meta charset="UTF-8" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+   
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>CyberShield Academy Mobile</title>
+   
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+   
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   
+  <link    
+    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap"
+        rel="stylesheet">
+   
+  <script src="https://www.youtube.com/iframe_api"></script>
+    <style>
+    /* --- MOBILE-FIRST VARIABLES & RESET --- */
+    :root {
+      --bg: #0B0E14;
+      --bg-dark: #07090D;
+      --panel: #151A23;
+      --panel-solid: #1C2331;
+      --panel-light: rgba(255, 255, 255, 0.05);
+
+      --accent-cyan: #00e5ff;
+      --accent-violet: #8b5cf6;
+      --accent-green: #10b981;
+      --accent-gold: #f59e0b;
+      --accent-red: #ef4444;
+
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+
+      --border: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(0, 229, 255, 0.3);
+
+      --glass: blur(12px);
+      --shadow-premium: 0 8px 30px rgba(0, 0, 0, 0.2);
+
+      --header-h: 70px;
+      --nav-h: 80px;
+      --pad: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    html,
+    body {
+      color: var(--text);
+      font-family: 'Nunito', -apple-system, sans-serif;
+      background: var(--bg);
+      overflow: hidden;
+      /* App Shell controls scroll */
+      height: 100vh;
+      width: 100vw;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 0.5em;
+      color: var(--text);
+    }
+
+    a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      outline: none;
+    }
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbars for app feel */
+
+    /* --- LAYOUT SHELL --- */
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100vw;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* --- MOBILE HEADER --- */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--header-h);
+      padding: 0 var(--pad);
+      background: rgba(11, 14, 20, 0.85);
+      backdrop-filter: var(--glass);
+      -webkit-backdrop-filter: var(--glass);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      flex-shrink: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand .logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #fff;
+      font-size: 16px;
+      box-shadow: 0 4px 10px rgba(0, 229, 255, 0.3);
+    }
+
+    .brand .name {
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 1.2;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .xp-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      border-radius: 20px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--accent-cyan);
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--panel-solid);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      color: var(--text);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    /* --- MAIN CONTENT AREA --- */
+    main {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 16px var(--pad) calc(var(--nav-h) + 24px);
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* --- BOTTOM NAVIGATION --- */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-h);
+      background: rgba(11, 14, 20, 0.95);
+      backdrop-filter: var(--glass);
+      -webkit-backdrop-filter: var(--glass);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding-bottom: env(safe-area-inset-bottom);
+      z-index: 100;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dim);
+      text-decoration: none;
+      width: 25%;
+      /* Adjusted to 25% since we have 4 icons now */
+      height: 100%;
+      gap: 4px;
+      transition: color 0.2s;
+    }
+
+    .nav-item.active {
+      color: var(--accent-cyan);
+    }
+
+    .nav-item .ico {
+      font-size: 24px;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .nav-item.active .ico {
+      transform: translateY(-4px) scale(1.1);
+    }
+
+    .nav-item .lbl {
+      font-size: 11px;
+      font-weight: 800;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* --- CARDS & UI COMPONENTS --- */
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .hero {
+      padding: 24px;
+      border-radius: 24px;
+      margin-bottom: 24px;
+      background: linear-gradient(145deg, #1A1F35, #0B0E14);
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(0, 229, 255, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Swipeable Horizontal Grid for Stats */
+    .swipe-grid {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 16px;
+      margin-right: calc(var(--pad) * -1);
+      padding-right: var(--pad);
+      scrollbar-width: none;
+    }
+
+    .stat {
+      background: var(--panel-solid);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      min-width: 140px;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .stat .v {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 4px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .stat .l {
+      color: var(--text-dim);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Vertical Standard Grid */
+    .grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .course-card {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .course-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: var(--panel-solid);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+    }
+
+    .badge {
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .badge.beg {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--accent-green);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .badge.int {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--accent-gold);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    .badge.adv {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--accent-red);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    /* Touch-Friendly Buttons */
+    .btn {
+      padding: 16px 20px;
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+      color: #fff;
+      border: none;
+      width: 100%;
+      min-height: 52px;
+      box-shadow: 0 4px 15px rgba(0, 229, 255, 0.2);
+      transition: transform 0.1s;
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+    }
+
+    .btn.ghost {
+      background: var(--panel-solid);
+      color: var(--text);
+      border: 1px solid var(--border);
+      box-shadow: none;
+    }
+
+    .progress {
+      height: 8px;
+      background: var(--bg-dark);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+
+    .progress div {
+      height: 100%;
+      background: var(--accent-cyan);
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    /* Animations */
+    .fade-in {
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Forms */
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .field input,
+    .field textarea {
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 16px;
+      /* 16px prevents iOS zoom */
+      outline: none;
+      width: 100%;
+      min-height: 52px;
+      font-weight: 600;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: var(--accent-cyan);
+    }
+
+    /* Video Player */
+    .iframe-box {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: #000;
+      margin-bottom: 16px;
+    }
+
+    .iframe-box iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Exam Cards (Touch Optimized) */
+    .q-card {
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      background: var(--panel);
+    }
+
+    .q-card.correct {
+      border-color: var(--accent-green);
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    .q-card.wrong {
+      border-color: var(--accent-red);
+      background: rgba(239, 68, 68, 0.05);
+    }
+
+    /* Modals */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: var(--pad);
+    }
+
+    .modal .box {
+      width: 100%;
+      max-width: 400px;
+      background: var(--panel-solid);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow-premium);
+      animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Certificate Canvas Fix for Mobile */
+    #certCanvas {
+      width: 100%;
+      max-width: 800px;
+      height: auto;
+      border-radius: 12px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent-cyan);
+      color: #000;
+      padding: 12px 24px;
+      border-radius: 24px;
+      font-weight: 800;
+      font-size: 14px;
+      z-index: 2000;
+      box-shadow: 0 4px 15px rgba(0, 229, 255, 0.4);
+      animation: toastIn 0.3s ease;
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+   
+  <script>
+    /* ============================ DATA ============================ */
+    const COURSES = [
+      { id: "sec+", title: "Security Basics", icon: "🛡️", diff: "Beginner", rating: 4.8, students: 18420, desc: "A fun intro to staying safe online! Learn about passwords, viruses, and being smart." },
+      { id: "cissp", title: "Cyber Expert", icon: "🧩", diff: "Advanced", rating: 4.9, students: 9210, desc: "Advanced security architecture. Become a true Cyber Guardian!" },
+      { id: "ceh", title: "Ethical Hacker", icon: "🦸‍♂️", diff: "Intermediate", rating: 4.7, students: 14750, desc: "Learn how the good guys think to stop the bad guys. Ethical hacking 101." },
+      { id: "cisa", title: "Safety Auditor", icon: "📋", diff: "Intermediate", rating: 4.6, students: 7600, desc: "Check systems like a detective to make sure everything is super secure." },
+      { id: "cism", title: "Cyber Leader", icon: "🏛️", diff: "Advanced", rating: 4.7, students: 6800, desc: "Learn to manage and guide a team of cyber defenders!" },
+      { id: "gsec", title: "Practical Defense", icon: "⚙️", diff: "Intermediate", rating: 4.5, students: 5400, desc: "Hands-on skills to lock down your computer and network." },
+      { id: "cysa", title: "Threat Hunter", icon: "🎯", diff: "Intermediate", rating: 4.6, students: 8900, desc: "Track down sneaky viruses and stop them in their tracks." },
+      { id: "casp", title: "Elite Architect", icon: "🚀", diff: "Advanced", rating: 4.7, students: 4300, desc: "Design impenetrable fortresses of data!" }
+    ];
+
+    // Genuine & Embeddable Cybersecurity Educational Videos
+    const VIDEO_IDS = [
+      "z5nc9MDwUaI", // CrashCourse - Cybersecurity
+      "O_Kj1lRkO6M", // IBM Technology - What is Cybersecurity?
+      "-5wpm-gesOY", // Simplilearn - Cyber Security In 7 Minutes
+      "hXSFdwIOfnE", // TED-Ed - How hackers steal secrets
+      "sdpxddDzXfE", // CrashCourse - Cryptography
+      "3Kq1MIfTWCE", // Edureka - Cyber Security Full Course
+      "vPqIE2Kbs10", // Simplilearn - Ethical Hacking
+      "lsHX_6rB8gY", // Kaspersky - What is Phishing
+      "F5mRW0jo-U4", // TED-Ed - Computer bug
+      "jZAqA2qU1zQ"  // IBM - Cloud Security
+    ];
+
+    function makeChapters(courseTitle) {
+      const topics = ["Foundations & Vocabulary", "Threats, Attacks & Vulnerabilities", "Cryptography & PKI", "Identity & Access Management", "Network Security", "Cloud & Virtualization", "Secure Architecture", "Incident Response", "Governance, Risk & Compliance", "Capstone Lab"];
+      return topics.map((t, i) => ({
+        id: i + 1, title: `Ch ${i + 1}: ${t}`, duration: `${10 + (i % 5) * 4}:${(i * 7) % 60 < 10 ? '0' : ''}${(i * 7) % 60}`,
+        youtube: VIDEO_IDS[i % VIDEO_IDS.length],
+        notes: `<h3 style="margin-bottom:8px;">${t}</h3><p style="margin-bottom:12px;">This chapter of <b>${courseTitle}</b> covers the fundamentals of <i>${t.toLowerCase()}</i> including key terminology, real-world examples and exam-relevant scenarios.</p><ul style="padding-left:20px; display:flex; flex-direction:column; gap:8px;"><li>Definitions & taxonomy</li><li>Common attacks & defenses</li><li>Hands-on lab walkthrough</li><li>Exam tips & tricks</li></ul>`,
+        pdf: "#mock-textbook.pdf"
+      }));
+    }
+
+    const QUIZBANK = {
+      "sec+": [
+        { q: "Which protocol provides secure remote login?", a: ["FTP", "SSH", "HTTP", "Telnet"], c: 1 },
+        { q: "Which is a symmetric cipher?", a: ["RSA", "AES", "ECC", "DSA"], c: 1 },
+        { q: "CIA triad stands for?", a: ["Control, Integrity, Auth", "Confidentiality, Integrity, Availability", "Crypto, Identity, Access", "Compliance, Insurance, Audit"], c: 1 },
+        { q: "A phishing attack primarily exploits?", a: ["Buffer overflow", "Human trust", "DNS cache", "Race condition"], c: 1 },
+        { q: "Which port does HTTPS use by default?", a: ["21", "22", "80", "443"], c: 3 }
+      ],
+      "cissp": [
+        { q: "Which model focuses on integrity using well-formed transactions?", a: ["Bell-LaPadula", "Clark-Wilson", "Biba", "Brewer-Nash"], c: 1 },
+        { q: "RTO measures?", a: ["Data loss tolerance", "Time to recover", "Backup frequency", "Risk score"], c: 1 },
+        { q: "Which is qualitative risk analysis output?", a: ["ALE", "SLE", "Risk matrix", "ARO"], c: 2 },
+        { q: "Kerberos primarily provides?", a: ["Encryption", "Authentication", "Non-repudiation", "Backup"], c: 1 },
+        { q: "Defense-in-depth means?", a: ["Single strong control", "Layered controls", "Strong perimeter only", "Air-gapped systems"], c: 1 }
+      ],
+      "ceh": [
+        { q: "Nmap -sS performs?", a: ["UDP scan", "SYN stealth scan", "Ping sweep", "OS detection"], c: 1 },
+        { q: "SQL Injection targets?", a: ["Network layer", "Database queries", "Kernel", "Wi-Fi"], c: 1 },
+        { q: "Which is a recon tool?", a: ["Hydra", "theHarvester", "Metasploit", "John"], c: 1 },
+        { q: "XSS stands for?", a: ["X Server Spoof", "Cross-Site Scripting", "XML Side Script", "eXternal Shell Service"], c: 1 },
+        { q: "Privilege escalation moves from?", a: ["High to low priv", "Low to higher priv", "User to user", "LAN to WAN"], c: 1 }
+      ],
+      "cisa": [
+        { q: "IS auditor independence is?", a: ["Optional", "Mandatory", "Only for finance", "Only externally"], c: 1 },
+        { q: "Compensating controls are used when?", a: ["Primary control unavailable", "Audit fails", "System upgrades", "User trained"], c: 0 },
+        { q: "COBIT is a framework for?", a: ["Coding", "IT governance", "Networking", "Cryptography"], c: 1 },
+        { q: "Sampling risk is?", a: ["Risk sample is wrong", "Tool failure", "Audit trail loss", "Bias only"], c: 0 },
+        { q: "Continuous auditing relies on?", a: ["Manual review", "Automation", "Annual checks", "Outsourcing"], c: 1 }
+      ],
+      "cism": [
+        { q: "Security strategy aligns with?", a: ["IT plan", "Business objectives", "HR policy", "Vendor SLA"], c: 1 },
+        { q: "KPI for security program?", a: ["Patch coverage", "Coffee count", "Email sent", "Tickets opened"], c: 0 },
+        { q: "BIA identifies?", a: ["Critical processes", "Threat actors", "Patches", "Crypto keys"], c: 0 },
+        { q: "Risk acceptance requires?", a: ["Auditor sign-off", "Management approval", "User vote", "No approval"], c: 1 },
+        { q: "Security awareness aims at?", a: ["Compliance only", "Behavior change", "Tool sales", "Audit pass"], c: 1 }
+      ],
+      "gsec": [
+        { q: "SIEM aggregates?", a: ["Logs & events", "Hardware", "Cables", "Users"], c: 0 },
+        { q: "Default deny is a?", a: ["Allow-list", "Deny-list", "Audit", "Patch"], c: 0 },
+        { q: "Which protocol is encrypted?", a: ["Telnet", "FTP", "HTTPS", "SNMPv1"], c: 2 },
+        { q: "Hashing provides?", a: ["Confidentiality", "Integrity", "Availability", "Auth only"], c: 1 },
+        { q: "MFA combines?", a: ["Two passwords", "Something you know + have", "Two tokens", "Two phones"], c: 1 }
+      ],
+      "cysa": [
+        { q: "IOC means?", a: ["Indicator of Compromise", "Index of Controls", "Internet Origin Cert", "Internal Op Code"], c: 0 },
+        { q: "Threat hunting is?", a: ["Reactive", "Proactive", "Random", "Manual only"], c: 1 },
+        { q: "YARA is used for?", a: ["Network scanning", "Malware identification", "Patch mgmt", "Backups"], c: 1 },
+        { q: "MITRE ATT&CK maps?", a: ["Bugs", "Tactics & techniques", "Patches", "Vendors"], c: 1 },
+        { q: "Pcap is captured by?", a: ["nmap", "tcpdump", "john", "hydra"], c: 1 }
+      ],
+      "casp": [
+        { q: "Zero trust assumes?", a: ["Perimeter is safe", "Never trust, verify", "Trust internal", "Trust admins"], c: 1 },
+        { q: "FIPS 140 deals with?", a: ["Crypto modules", "Network speed", "UI design", "Patching"], c: 0 },
+        { q: "SOAR helps with?", a: ["Sales", "Security automation", "Office tools", "Storage"], c: 1 },
+        { q: "Threat modeling uses STRIDE for?", a: ["Performance", "Threat categories", "Backups", "UX"], c: 1 },
+        { q: "HSM stands for?", a: ["High Security Mode", "Hardware Security Module", "Host System Manager", "Hash Stream Map"], c: 1 }
+      ]
+    };
+
+    const FINAL_EXAM_QUESTIONS = [
+      { q: "What is the primary goal of the 'Confidentiality' in the CIA triad?", a: ["Ensuring data is available", "Preventing unauthorized access", "Ensuring data is accurate", "Encrypting everything"], c: 1 },
+      { q: "Which type of malware replicates itself to spread to other computers?", a: ["Virus", "Worm", "Trojan", "Spyware"], c: 1 },
+      { q: "What does MFA stand for?", a: ["Multi-Factor Authentication", "Most Frequent Access", "Main Frame Admin", "Mobile File Archive"], c: 0 },
+      { q: "A 'Brute Force' attack targets which of the following?", a: ["Physical security", "Passwords", "Network cables", "SQL databases"], c: 1 },
+      { q: "Which protocol is used to encrypt web traffic?", a: ["HTTP", "FTP", "HTTPS", "SMTP"], c: 2 },
+      { q: "What is 'Phishing'?", a: ["A type of network scan", "Social engineering via fake emails", "Cracking a safe", "Upgrading a server"], c: 1 },
+      { q: "What does a Firewall do?", a: ["Speeds up internet", "Blocks unauthorized traffic", "Stores passwords", "Generates reports"], c: 1 },
+      { q: "What is a 'Zero-Day' vulnerability?", a: ["A bug found on the 1st of the month", "A flaw with no patch yet available", "A virus that deletes itself", "A password with 0 characters"], c: 1 },
+      { q: "Which of these is a strong password?", a: ["password123", "Admin!", "J9#kL2!pQx8", "12345678"], c: 2 },
+      { q: "What is 'Ransomware'?", a: ["Software that demands money to unlock files", "A free trial of software", "A type of firewall", "A search engine"], c: 0 },
+      { q: "What is the purpose of 'Integrity' in CIA?", a: ["Ensuring data is secret", "Ensuring data is not altered", "Ensuring data is fast", "Ensuring data is backed up"], c: 1 },
+      { q: "What is 'Social Engineering'?", a: ["Building social media sites", "Manipulating people to give up info", "Organizing office parties", "Coding in groups"], c: 1 },
+      { q: "What is a 'VPN'?", a: ["Virtual Private Network", "Very Personal Name", "Validated Power Node", "Visible Privacy Network"], c: 0 },
+      { q: "Which of these is 'Spyware'?", a: ["Software that shows ads", "Software that secretly monitors activity", "Software that speeds up PC", "Software that builds websites"], c: 1 },
+      { q: "What is 'DDoS'?", a: ["Data Delivery Online", "Distributed Denial of Service", "Direct Device Operating System", "Daily Data Output"], c: 1 },
+      { q: "What is a 'Trojan Horse'?", a: ["A fast network card", "Malware disguised as useful software", "A type of physical lock", "A strong encryption key"], c: 1 },
+      { q: "What is 'Shoulder Surfing'?", a: ["Surfing the web at the beach", "Watching someone enter a PIN in person", "A type of browser exploit", "Using a laptop on a plane"], c: 1 },
+      { q: "What does 'IoT' stand for?", a: ["Internet of Toys", "Internet of Things", "Input Output Tools", "Integrated Online Tech"], c: 1 },
+      { q: "What is 'Encryption'?", a: ["Deleting files", "Scrambling data into unreadable format", "Compressing files", "Sending files via email"], c: 1 },
+      { q: "What is a 'Keylogger'?", a: ["A tool to unlock doors", "Malware that records keystrokes", "A type of mechanical keyboard", "A password manager"], c: 1 },
+      { q: "Which port is used by SSH?", a: ["21", "22", "80", "443"], c: 1 },
+      { q: "What is 'Doxxing'?", a: ["A type of video game", "Publishing private info online publicly", "Building a website", "Sending a friendly DM"], c: 1 },
+      { q: "What is 'Two-Factor Authentication'?", a: ["Using two passwords", "Using a password + a phone code", "Logging in twice", "Having two accounts"], c: 1 },
+      { q: "What is 'Malware'?", a: ["Software for mailing", "Malicious Software", "Maximum Welfare", "Management Hardware"], c: 1 },
+      { q: "What is 'End-to-End Encryption'?", a: ["Encrypting only the headers", "Only the sender and receiver can read messages", "A way to speed up chat", "Encryption used by ISPs"], c: 1 },
+      { q: "What is 'Clickjacking'?", a: ["Stealing a mouse", "Tricking users into clicking something hidden", "Fast clicking", "A type of ad"], c: 1 },
+      { q: "What is 'Botnet'?", a: ["A net for robots", "A network of infected 'zombie' computers", "A group of chat bots", "A type of server farm"], c: 1 },
+      { q: "What is 'Whaling'?", a: ["Phishing targeting executives", "A large cyberattack", "Hacking a fishing boat", "Using large servers"], c: 0 },
+      { q: "What is 'Juice Jacking'?", a: ["Stealing juice", "Hacking via public USB charging ports", "Speeding up phone charging", "Hacking a fridge"], c: 1 },
+      { q: "What is 'Zero Trust'?", a: ["Trusting nobody", "Never trust, always verify", "A system with no security", "A type of virus"], c: 1 },
+      { q: "What is 'SQL Injection'?", a: ["Injecting needles into servers", "Manipulating a database via malicious input", "A database speed boost", "A secure storage method"], c: 1 },
+      { q: "What is 'XSS'?", a: ["X-Ray Security", "Cross-Site Scripting", "XML Side Script", "eXternal Shell Service"], c: 1 },
+      { q: "What is 'Pretexting'?", a: ["Sending a text first", "Creating a fake scenario to trick someone", "Testing code", "Reading a book intro"], c: 1 },
+      { q: "What is 'Typosquatting'?", a: ["Squatting while typing", "Registering misspelled domain names of popular sites", "A keyboard exercise", "Hacking a gym"], c: 1 },
+      { q: "What is 'Baiting'?", a: ["Using worms for fish", "Leaving infected USB drives for victims to find", "Online debates", "Spamming emails"], c: 1 },
+      { q: "What is 'Honeypot'?", a: ["A pot of honey", "A decoy system to lure hackers", "A sweet program", "A type of award"], c: 1 },
+      { q: "What is 'Penetration Testing'?", a: ["Testing a computer's physical strength", "Authorized simulated attacks to find flaws", "A type of software update", "Installing a firewall"], c: 1 },
+      { q: "What is 'Least Privilege'?", a: ["Giving everyone full access", "Giving only necessary access for a task", "A type of social class", "A low-cost software"], c: 1 },
+      { q: "What is 'Shadow IT'?", a: ["IT teams working at night", "Unapproved software or hardware used by staff", "A type of dark mode", "A backup IT team"], c: 1 },
+      { q: "What is 'Data Breaching'?", a: ["Cleaning a database", "Unauthorized access to sensitive data", "Moving data", "Deleting old data"], c: 1 },
+      { q: "What is 'Adware'?", a: ["Software that shows unwanted ads", "Software for creating ads", "A fast browser", "A search engine"], c: 0 },
+      { q: "What is 'Logic Bomb'?", a: ["A difficult puzzle", "Malware triggered by a specific condition", "A coding logic", "A fast CPU"], c: 1 },
+      { q: "What is 'Vishing'?", a: ["Visual Phishing", "Voice Phishing", "Very Important Phishing", "Video Phishing"], c: 1 },
+      { q: "What is 'Smishing'?", a: ["Phishing via SMS", "Small Phishing", "Smart Phishing", "Phishing via Smartwatches"], c: 0 },
+      { q: "What is 'Grey Hat' hacking?", a: ["Hacking without a hat", "Hacking with mixed motives, sometimes illegal", "Weather hacking", "A type of protocol"], c: 1 },
+      { q: "What is 'White Hat' hacking?", a: ["Ethical hacking for security", "Hacking for personal gain", "Government hacking", "A storage type"], c: 0 },
+      { q: "What is 'Black Hat' hacking?", a: ["Hacking with a hat", "Malicious hacking for gain", "Hacking for security firms", "A coding style"], c: 1 },
+      { q: "What is 'Rooting' or 'Jailbreaking'?", a: ["Fixing a screen", "Removing manufacturer restrictions on a device", "Watering plants", "Fast charging"], c: 1 },
+      { q: "What is 'Salting'?", a: ["Adding random data to passwords before hashing", "Making passwords shorter", "Encryption type", "A seasoning"], c: 0 },
+      { q: "What is 'Hash' function?", a: ["Turns data into a fixed-length string", "Deletes files", "Search tool", "A type of potato"], c: 0 },
+      { q: "What is 'Digital Forensics'?", a: ["Investigating digital evidence", "Building computers", "Digital art", "Encrypting files"], c: 0 },
+      { q: "What is 'Incident Response'?", a: ["Managing a security breach", "Asking for help", "Error message", "A type of router"], c: 0 },
+      { q: "What is 'Patch Management'?", a: ["Updating software to fix flaws", "Fixing a cable", "Organizing files", "A gardening tool"], c: 0 },
+      { q: "What is 'Red Team'?", a: ["Attacker group in security exercise", "Bug fixers", "Admins", "A type of firewall"], c: 0 },
+      { q: "What is 'Blue Team'?", a: ["Defender group in security exercise", "Malware creators", "Hackers", "A type of cloud"], c: 0 },
+      { q: "What is 'DLP'?", a: ["Data Loss Prevention", "Digital Line Protocol", "Direct Log Printer", "Data Link Port"], c: 0 },
+      { q: "What is 'SIEM'?", a: ["Security Information and Event Management", "System Internal Error Map", "Secure Internet Entry Method", "Software Image Entry Mode"], c: 0 },
+      { q: "What is 'MAC Address'?", a: ["A city address", "Unique hardware identifier", "Macintosh address", "An IP type"], c: 1 },
+      { q: "What is 'IP Address'?", a: ["Network address for a device", "Privacy address", "Power address", "Internal Password"], c: 0 },
+      { q: "What is 'Cookie' in web?", a: ["A snack", "Small data stored by browser", "A virus", "A secret password"], c: 1 },
+      { q: "What is 'Cache'?", a: ["Money", "Temporary storage for web files", "A virus", "A secret folder"], c: 1 },
+      { q: "What is 'Spam'?", a: ["Meat", "Unwanted bulk email", "Fast internet", "Coding error"], c: 1 },
+      { q: "What is 'Air Gap'?", a: ["Space between keys", "Computer never connected to internet", "Cooling fan", "Wireless internet"], c: 1 },
+      { q: "What is 'Backdoor'?", a: ["Secret house door", "Hidden way to bypass authentication", "Backup drive", "A restart tool"], c: 1 },
+      { q: "What is 'Bio-metric'?", a: ["Math problem", "Fingerprint or face login", "Long password", "Height/weight measure"], c: 1 },
+      { q: "What is 'Script Kiddie'?", a: ["Child coder", "User of pre-made tools without deep knowledge", "Small computer", "A font"], c: 1 },
+      { q: "What is 'CSRF'?", a: ["Forging a site", "Cross-Site Request Forgery", "Digital signature", "Secure data sending"], c: 1 },
+      { q: "What is 'Dictionary Attack'?", a: ["Reading a book", "Trying common words as passwords", "Spelling bee", "Hacking a library"], c: 1 },
+      { q: "What is 'Dictionary' in coding?", a: ["Key-value pair collection", "A spellchecker", "A list of strings", "A type of function"], c: 0 },
+      { q: "What is 'Brute Force' time complexity?", a: ["Exponential", "Linear", "Logarithmic", "Constant"], c: 0 },
+      { q: "What is 'Cold Boot' attack?", a: ["Winter boot", "Retrieving keys from RAM after reboot", "Fast boot", "A virus"], c: 1 },
+      { q: "What is 'Pharmimg'?", a: ["Pharmacy hack", "DNS poisoning redirecting to fake sites", "Digital plants", "Crypto mining"], c: 1 },
+      { q: "What is 'Incognito Mode' for?", a: ["Hiding from gov", "Not saving history locally", "Invisibility to hackers", "Speeding up web"], c: 1 },
+      { q: "What is 'SSID'?", a: ["Secure ID", "Wi-Fi network name", "Internet speed", "Password"], c: 1 },
+      { q: "What is 'Eavesdropping'?", a: ["Listening to music", "Secretly monitoring private traffic", "Hiding files", "A cable type"], c: 1 },
+      { q: "What is 'Wiping'?", a: ["Cleaning with cloth", "Permanent data erasure", "Trash bin", "Virus scan"], c: 1 },
+      { q: "What is 'Bot'?", a: ["A robot", "Automated software program", "A game", "Small PC"], c: 1 },
+      { q: "What is 'SQL'?", a: ["Quick Language", "Structured Query Language", "Quick Link", "Quality Log"], c: 1 },
+      { q: "What is 'Adware' goal?", a: ["Revenue via ads", "Stealing files", "Encrypting data", "Helping users"], c: 0 },
+      { q: "What is 'Rootkit'?", a: ["Garden tool", "Malware providing admin-level access while hiding", "A fast router", "A system boot tool"], c: 1 },
+      { q: "What is 'Packet Sniffing'?", a: ["Smelling mail", "Intercepting network packets", "Speeding up network", "Deleting packets"], c: 1 },
+      { q: "What is 'Social Media Forest' in CSA?", a: ["A real forest", "A training module on digital footprints", "A hacker group", "A type of server"], c: 1 },
+      { q: "What is 'Password Peaks' in CSA?", a: ["A mountain range", "A module on password security", "A game level", "A crypto type"], c: 1 },
+      { q: "What is 'Privacy Plains' in CSA?", a: ["A flat land", "A module on data protection", "A legal doc", "A browser"], c: 1 },
+      { q: "Who is 'Suraksha'?", a: ["A hacker", "Academy mascot", "A teacher", "A virus"], c: 1 },
+      { q: "What is the passing score for the Final Exam?", a: ["50", "80", "100", "40"], c: 1 },
+      { q: "What is 'MFA' code called?", a: ["OTP (One-Time Password)", "PIN", "Key", "Token"], c: 0 },
+      { q: "What is 'Data Privacy'?", a: ["Right to keep info private", "Encrypted storage only", "Public data", "A type of firewall"], c: 0 },
+      { q: "What is 'Netiquette'?", a: ["Internet etiquette", "A small net", "Network speed", "Coding style"], c: 0 },
+      { q: "What is 'Cyberbullying'?", a: ["Bullying in person", "Harassment via digital devices", "A type of virus", "A firewall setting"], c: 1 },
+      { q: "What is 'Grooming' online?", a: ["Brushing hair", "Manipulating kids for abuse", "A browser update", "Cleaning a keyboard"], c: 1 },
+      { q: "What is 'Identity Theft'?", a: ["Losing a wallet", "Fraudulent use of someone's personal info", "Changing a username", "Borrowing a phone"], c: 1 },
+      { q: "What is 'Pharming'?", a: ["Digital farming", "Redirecting web traffic to fraudulent sites", "A type of malware", "A secure DNS"], c: 1 },
+      { q: "What is 'Trojan' goal?", a: ["Helping users", "Opening a backdoor for attackers", "Encrypting files", "Deleting history"], c: 1 },
+      { q: "What is 'Worm' replication?", a: ["Requires user action", "Self-replicating across networks", "Only on USBs", "Manual copy only"], c: 1 },
+      { q: "What is 'Virus' attachment?", a: ["Requires a host file or user action to spread", "Self-spreading", "Only in emails", "A physical chip"], c: 0 },
+      { q: "What is 'Ransomware' payment usually in?", a: ["Cash", "Cryptocurrency", "Gift cards", "Gold"], c: 1 },
+      { q: "What is 'Security+' focus?", a: ["Entry-level security", "Management", "Advanced coding", "Audit only"], c: 0 },
+      { q: "What is 'CISSP' difficulty?", a: ["Beginner", "Advanced", "Intermediate", "Easy"], c: 1 },
+      { q: "What is 'Defense in Depth'?", a: ["A deep swimming pool", "Layered security controls", "One very strong firewall", "Encryption only"], c: 1 }
+    ];
+
+    const LEVELS = ["Rookie", "Script Kiddie", "Security Analyst", "Ethical Hacker", "Cyber Ninja", "Elite Defender"];
+    function levelFor(xp) { return LEVELS[Math.min(LEVELS.length - 1, Math.floor(xp / 300))] }
+
+
+    /* ============================ STATE ============================ */
+    const LS = "csa_state_mobile_v1";
+    let state = JSON.parse(localStorage.getItem(LS) || "null") || {};
+    state.user = state.user || { name: "Cyber Guardian", email: "guardian@cyber.io", bio: "Defending the digital realm." };
+    state.xp = state.xp || 0;
+    state.streak = state.streak || 0;
+    state.lastDay = state.lastDay || new Date().toDateString();
+    state.enrolled = state.enrolled || {};
+    state.completed = state.completed || {};
+    state.quizzes = state.quizzes || [];
+    state.certificates = state.certificates || [];
+    state.badges = state.badges || [];
+    state.studyMins = state.studyMins || [40, 55, 30, 80, 60, 90, 45];
+    state.scoreTrend = state.scoreTrend || [];
+
+    if (state.reducedMotion === undefined) state.reducedMotion = false;
+
+    function save() { localStorage.setItem(LS, JSON.stringify(state)) }
+    function awardXP(n) { state.xp += n; updateStreak(); save(); toast("+" + n + " XP") }
+    function updateStreak() {
+      const t = new Date().toDateString();
+      if (state.lastDay === t) return;
+      const y = new Date(Date.now() - 86400000).toDateString();
+      state.streak = (state.lastDay === y) ? state.streak + 1 : 1;
+      state.lastDay = t;
+    }
+    function addBadge(b) { if (!state.badges.includes(b)) { state.badges.push(b); toast("🏆 Badge: " + b) } save() }
+
+    /* ============================ UTIL ============================ */
+    function $(s, r = document) { return r.querySelector(s) }
+    function el(t, a = {}, ...c) { const e = document.createElement(t); for (const k in a) { if (k === "class") e.className = a[k]; else if (k.startsWith("on")) e[k.toLowerCase()] = a[k]; else e.setAttribute(k, a[k]) } c.flat().forEach(x => e.append(x?.nodeType ? x : document.createTextNode(x ?? ""))); return e }
+    function toast(msg) { const t = el("div", { class: "toast" }, msg); document.body.append(t); setTimeout(() => t.remove(), 2000) }
+    function initials(n) { if (!n) return "??"; return n.split(" ").filter(Boolean).map(x => x[0]).slice(0, 2).join("").toUpperCase() }
+
+    /* ============================ ROUTER ============================ */
+    const routes = {};
+    function route(p, fn) { routes[p] = fn }
+    function go(p) {
+      if (location.hash === "#" + p || location.hash === p) render();
+      else location.hash = p;
+    }
+    window.addEventListener("hashchange", render);
+    function render() {
+      try {
+        const h = location.hash.replace("#", "") || "/dashboard";
+        const [base, ...rest] = h.split("/").filter(Boolean);
+        const fn = routes["/" + base] || routes["/dashboard"];
+        const app = $("#app");
+        if (!app) return;
+        app.innerHTML = "";
+
+        if (state.user) {
+          app.append(shell());
+          const target = $("#main");
+          if (target && fn) target.append(fn(rest));
+
+          // Update Active Bottom Nav
+          document.querySelectorAll(".bottom-nav .nav-item").forEach(a => {
+            a.classList.toggle("active", a.dataset.r === base);
+          });
+        }
+      } catch (e) {
+        console.error("Render error:", e);
+      }
+    }
+
+    /* ============================ SHELL ============================ */
+    function shell() {
+      const wrap = document.createDocumentFragment();
+
+      const top = el("header", { class: "topbar" },
+        el("div", { style: "display:flex; align-items:center; gap:12px;" },
+          el("a", { href: "index.html", style: "color:var(--text); text-decoration:none; font-size:24px; display:flex; align-items:center; opacity:0.8;", title: "Back to Hub" }, "←"),
+          el("div", { class: "brand" },
+            el("div", { class: "logo" }, "CS"),
+            el("div", { class: "name" }, "CyberShield")
+          )
+        ),
+        el("div", { class: "topbar-right" },
+          el("div", { class: "xp-pill" },
+            el("span", { style: "font-size:1.2em" }, "⚡"),
+            state.xp + " XP"
+          ),
+          el("div", { class: "avatar", onclick: () => go("/profile") }, initials(state.user.name))
+        )
+      );
+
+      const main = el("main", { id: "main" });
+
+      const bnav = el("nav", { class: "bottom-nav" },
+        navL("dashboard", "🏠", "Command"),
+        navL("courses", "🛡️", "Catalog"),
+        navL("learning", "🎯", "Missions"),
+        navL("profile", "👤", "Profile")
+      );
+
+      wrap.append(top, main, bnav);
+      return wrap;
+    }
+
+    function navL(r, i, t) { return el("a", { href: "#" + r, "data-r": r, class: "nav-item" }, el("span", { class: "ico" }, i), el("span", { class: "lbl" }, t)) }
+
+    function field(name, label, type, ph) {
+      return el("div", { class: "field" },
+        el("label", {}, label),
+        el("input", { name, type, placeholder: ph, required: "true" })
+      );
+    }
+
+    /* ============================ COURSES ============================ */
+    route("/courses", () => {
+      const page = el("div", { class: "fade-in" });
+      page.append(el("h1", { style: "margin-bottom:8px; font-size:28px;" }, "Certifications"));
+      page.append(el("p", { style: "color:var(--text-dim); margin-bottom:24px; line-height:1.5; font-size:15px;" }, "Industry-standard training modules for the next generation of cybersecurity experts."));
+
+      const grid = el("div", { class: "grid" });
+      COURSES.forEach(c => grid.append(courseCard(c)));
+      page.append(grid);
+      return page;
+    });
+
+    route("/learning", () => {
+      const page = el("div", { class: "fade-in" });
+      page.append(el("h1", { style: "margin-bottom:24px; font-size:28px;" }, "Active Missions"));
+      const enr = Object.keys(state.enrolled);
+
+      if (!enr.length) {
+        page.append(el("div", { class: "card", style: "text-align:center; padding:40px 20px" },
+          el("div", { style: "font-size:48px; margin-bottom:16px" }, "🕵️"),
+          el("h3", { style: "font-size:22px; margin-bottom:12px" }, "No Active Operations"),
+          el("p", { style: "color:var(--text-dim); margin-bottom:24px; line-height:1.5" }, "Enroll in a certification to begin your training."),
+          el("button", { class: "btn", onclick: () => go("/courses") }, "Browse Catalog")
+        ));
+        return page;
+      }
+
+      const grid = el("div", { class: "grid" });
+      enr.forEach(id => {
+        const c = COURSES.find(x => x.id === id);
+        if (c) grid.append(courseCard(c));
+      });
+      page.append(grid);
+      return page;
+    });
+
+    function courseCard(c) {
+      const done = Object.keys(state.completed[c.id] || {}).length;
+      const pct = Math.round(done / 10 * 100);
+      const dcl = c.diff === "Beginner" ? "beg" : c.diff === "Intermediate" ? "int" : "adv";
+
+      return el("div", { class: "card course-card" },
+        el("div", { style: "display:flex; justify-content:space-between; align-items:flex-start" },
+          el("div", { class: "course-icon" }, c.icon),
+          el("span", { class: "badge " + dcl }, c.diff)
+        ),
+        el("div", {},
+          el("h3", { style: "margin:0 0 8px; font-size:20px" }, c.title),
+          el("p", { style: "color:var(--text-dim); font-size:14px; line-height:1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;" }, c.desc)
+        ),
+        el("div", { style: "margin-top:auto" },
+          el("div", { style: "display:flex; justify-content:space-between; font-size:13px; font-weight:700; margin-bottom:8px" },
+            el("span", { style: "color:var(--text-dim)" }, "Progress"),
+            el("span", { style: "color:var(--accent-cyan);" }, pct + "%")
+          ),
+          el("div", { class: "progress" }, el("div", { style: "width:" + pct + "%" })),
+          el("div", { style: "display:flex; justify-content:space-between; align-items:center; margin-top:20px" },
+            el("div", { style: "font-size:13px; color:var(--text-dim); font-weight:600;" },
+              el("span", { style: "color:var(--accent-gold); margin-right:4px;" }, "★ 4.8"),
+              c.students.toLocaleString() + " Users"
+            )
+          ),
+          el("button", {
+            class: "btn", style: "margin-top:16px;", onclick: () => {
+              state.enrolled[c.id] = true; save(); go("/course/" + c.id)
+            }
+          }, done ? "Resume Op" : "Begin Mission")
+        )
+      );
+    }
+
+    /* ============================ DASHBOARD ============================ */
+    route("/dashboard", () => {
+      const enrolled = Object.keys(state.enrolled).length;
+      const completed = Object.values(state.completed).reduce((a, b) => a + Object.keys(b).length, 0);
+
+      const page = el("div", { class: "fade-in" });
+
+      // Hero Section
+      const hero = el("div", { class: "hero" },
+        el("div", {},
+          el("h1", { style: "font-size:28px; margin:0 0 8px" }, "Welcome, " + state.user.name.split(" ")[0]),
+          el("p", { style: "color:var(--text-dim); font-size:15px; margin:0 0 24px; line-height:1.5;" }, "Your system integrity is high. Continue training to reach Elite status.")
+        ),
+        el("div", { style: "display:flex; justify-content:space-between; align-items:flex-end;" },
+          el("button", { class: "btn", style: "width:auto; padding:12px 24px;", onclick: () => go("/learning") }, "Resume Ops"),
+          el("div", { style: "text-align:right" },
+            el("div", { style: "font-size:36px; font-weight:800; color:var(--accent-cyan); line-height:1; font-family:'Space Grotesk';" }, state.streak + " Days"),
+            el("div", { style: "font-size:11px; font-weight:800; color:var(--text-dim); text-transform:uppercase; margin-top:8px; letter-spacing:0.5px;" }, "Active Streak 🔥")
+          )
+        )
+      );
+      page.append(hero);
+
+      // Horizontal Swipe Stats
+      const stats = el("div", { class: "swipe-grid" },
+        statCard("🛡️", "Certifications", enrolled),
+        statCard("✅", "Missions", completed),
+        statCard("💎", "Skill Score", state.xp),
+        statCard("🏆", "Medals Won", state.badges.length)
+      );
+      page.append(stats);
+
+      // Main Grid
+      const grid = el("div", { class: "grid" },
+        el("div", { class: "card", style: "display:flex; flex-direction:column; align-items:center;" },
+          el("h3", { style: "font-size:18px; width:100%; margin-bottom:16px;" }, "Skill Vector Analysis"),
+          el("canvas", { id: "radar", width: 300, height: 300, style: "max-width:100%" })
+        ),
+        el("div", { class: "card" }, el("h3", { style: "font-size:18px; margin-bottom:16px;" }, "Latest Intel"), activityList()),
+        el("div", { class: "card" }, el("h3", { style: "font-size:18px; margin-bottom:16px;" }, "Achievement Badges"), badgesView())
+      );
+      page.append(grid);
+
+      setTimeout(() => drawRadar($("#radar")), 0);
+      return page;
+    });
+
+    function statCard(i, l, v) {
+      return el("div", { class: "stat" },
+        el("div", { style: "font-size:32px; margin-bottom:8px;" }, i),
+        el("div", { class: "v" }, String(v)),
+        el("div", { class: "l" }, l)
+      );
+    }
+
+    function activityList() {
+      const items = [...state.quizzes.slice(-3).reverse().map(q => "📝 Quiz scored " + q.score + "/5"),
+      ...state.certificates.slice(-2).map(c => "🎓 Earned cert: " + c.course)];
+      if (!items.length) items.push("Start your first chapter to log activity!");
+      return el("div", { style: "display:flex; flex-direction:column; gap:12px;" }, ...items.map(t => el("div", { style: "padding:12px; background:var(--bg-dark); border-radius:12px; border:1px solid var(--border); font-size:14px; font-weight:600;" }, t)));
+    }
+
+    function badgesView() {
+      const all = ["First Blood", "Quiz Master", "No Sleep", "Certified"];
+      return el("div", { style: "display:flex;gap:12px;flex-wrap:wrap" }, ...all.map(b => {
+        const got = state.badges.includes(b);
+        return el("div", { style: "padding:16px; background:var(--bg-dark); border-radius:16px; border:1px solid var(--border); min-width:100px; flex:1; text-align:center; opacity:" + (got ? 1 : .4) },
+          el("div", { style: "font-size:28px; margin-bottom:8px;" }, got ? "🏆" : "🔒"),
+          el("div", { style: "font-weight:700; font-size:13px;" }, b));
+      }));
+    }
+
+    /* ============================ COURSE DETAIL ============================ */
+    route("/course", (rest) => {
+      const c = COURSES.find(x => x.id === rest[0]) || COURSES[0];
+      state.enrolled[c.id] = true;
+      save();
+
+      const chapters = makeChapters(c.title);
+      const done = state.completed[c.id] || {};
+      const totalDone = Object.keys(done).length;
+      const progressPct = Math.round((totalDone / chapters.length) * 100);
+
+      const page = el("div", { class: "fade-in" });
+
+      const header = el("div", { class: "card", style: "background:linear-gradient(145deg, #1A1F35, #0B0E14); border-color:var(--accent-cyan);" },
+        el("div", { style: "display:flex; gap:16px; align-items:center; margin-bottom:16px" },
+          el("div", { class: "course-icon", style: "width:64px; height:64px; font-size:32px; flex-shrink:0;" }, c.icon),
+          el("div", {},
+            el("h1", { style: "margin:0; font-size:22px; line-height:1.2;" }, c.title),
+            el("span", { class: "badge adv", style: "margin-top:6px;" }, "Pathway")
+          )
+        ),
+        el("p", { style: "color:var(--text-dim); margin-bottom:24px; font-size:14px; line-height:1.5;" }, c.desc),
+        el("div", { style: "display:flex; justify-content:space-between; font-size:13px; font-weight:700; margin-bottom:8px" },
+          el("span", { style: "color:var(--text-dim)" }, "Progress"),
+          el("span", { style: "color:var(--accent-cyan);" }, progressPct + "%")
+        ),
+        el("div", { class: "progress", style: "margin-bottom:24px" }, el("div", { style: "width:" + progressPct + "%" })),
+        el("button", { class: "btn", style: "background:var(--accent-violet);", onclick: () => go("/exam/" + c.id) }, "🚀 Final Exam")
+      );
+      page.append(header);
+
+      const list = el("div", { class: "grid", style: "margin-top:24px;" });
+      list.append(el("h2", { style: "font-size:22px; margin-bottom:8px;" }, "Modules"));
+
+      chapters.forEach((ch, i) => {
+        const unlocked = i === 0 || done[i];
+        const isCompleted = !!done[ch.id];
+
+        const card = el("div", { class: "card", style: "padding:20px; opacity:" + (unlocked || isCompleted ? 1 : 0.5) },
+          el("div", { style: "display:flex; align-items:flex-start; gap:16px;" },
+            el("div", { style: "font-family:'Space Grotesk'; font-size:28px; font-weight:800; color:var(--accent-cyan); line-height:1;" }, (i + 1).toString().padStart(2, '0')),
+            el("div", { style: "flex:1" },
+              el("h3", { style: "margin:0 0 6px; font-size:16px; line-height:1.4" }, ch.title),
+              el("div", { style: "font-size:13px; color:var(--text-dim); font-weight:600;" }, "⏱ " + ch.duration)
+            )
+          ),
+          el("div", { style: "margin-top:16px; display:flex; flex-direction:column; gap:12px;" },
+            isCompleted ? el("span", { style: "color:var(--accent-green); font-weight:800; font-size:13px; text-transform:uppercase;" }, "✓ COMPLETED") : null,
+            el("button", {
+              class: "btn " + (isCompleted ? "ghost" : ""),
+              style: "min-height:48px;",
+              onclick: () => {
+                if (!unlocked && !isCompleted) return toast("🔒 Complete previous ops first.");
+                openVideo(c, ch, i, chapters);
+              }
+            }, isCompleted ? "Review" : (unlocked ? "Begin Op" : "Locked"))
+          )
+        );
+        list.append(card);
+      });
+      page.append(list);
+
+      return page;
+    });
+
+    /* ============================ VIDEO + QUIZ (UPDATED FOR DIRECT HTML5 IFRAME) ============================ */
+    function openVideo(c, ch, idx, chapters) {
+      $("#main").innerHTML = "";
+      const page = el("div", { class: "fade-in" });
+
+      page.append(el("h2", { style: "font-size:20px; margin-bottom:4px; line-height:1.4" }, ch.title));
+      page.append(el("div", { style: "color:var(--accent-cyan); margin-bottom:20px; font-weight:700; font-family:'Space Grotesk'; font-size:13px;" }, "BRIEFING " + (idx + 1).toString().padStart(2, '0') + " / " + chapters.length.toString().padStart(2, '0')));
+
+      // Direct HTML5 iframe embed - bypasses the external YouTube Script API which often causes "Video player configuration errors" on custom domains.
+      const iframeEl = el("iframe", {
+        src: `https://www.youtube-nocookie.com/embed/${ch.youtube}?rel=0&modestbranding=1`,
+        frameBorder: "0",
+        allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+        allowFullscreen: "true",
+        referrerPolicy: "strict-origin-when-cross-origin",
+        style: "position:absolute; top:0; left:0; width:100%; height:100%; border:none; border-radius:16px;"
+      });
+
+      const vid = el("div", { style: "display:flex; flex-direction:column; gap:16px" },
+        el("div", { class: "iframe-box" }, iframeEl),
+        el("div", { style: "display:flex; flex-direction:column; gap:12px;" },
+          el("button", { id: "completeBtn", class: "btn", onclick: () => { awardXP(10); openQuiz(c, ch, idx, chapters) } }, "Initialize Assessment ⚡"),
+          el("button", { class: "btn ghost", onclick: () => go("/course/" + c.id) }, "← Abort Mission")
+        )
+      );
+
+      const notes = el("div", { class: "card", style: "margin-top:20px; padding:20px;" },
+        el("h3", { style: "color:var(--accent-cyan); font-size:18px; margin-bottom:12px; display:flex; align-items:center; gap:8px;" }, "📓 Tactical Notes"),
+        el("div", { style: "font-size:15px; line-height:1.6; color:var(--text-dim);" },
+          Object.assign(document.createElement("div"), { innerHTML: ch.notes })
+        )
+      );
+
+      page.append(vid, notes);
+      $("#main").append(page);
+      window.scrollTo(0, 0);
+    }
+
+    function openQuiz(c, ch, idx, chapters) {
+      const bank = QUIZBANK[c.id] || QUIZBANK["sec+"];
+      let i = 0, score = 0, timeLeft = 60;
+
+      const modal = el("div", { class: "modal" });
+      const box = el("div", { class: "box" });
+      modal.append(box);
+      document.body.append(modal);
+
+      let timer = setInterval(() => {
+        timeLeft--;
+        const tm = $("#tm");
+        if (tm) tm.textContent = "⏱ " + timeLeft + "s";
+        if (timeLeft <= 0) { clearInterval(timer); finish() }
+      }, 1000);
+
+      function showQ() {
+        if (i >= bank.length) return finish();
+        const q = bank[i];
+        box.innerHTML = "";
+        box.append(
+          el("div", { style: "display:flex;justify-content:space-between;align-items:center; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--border)" },
+            el("h3", { style: "margin:0; font-size:18px;" }, "Assessment Phase"),
+            el("div", { style: "display:flex; gap:16px; align-items:center" },
+              el("span", { style: "font-family:'Space Grotesk'; color:var(--text-dim); font-size:14px" }, (i + 1) + "/" + bank.length),
+              el("span", { id: "tm", style: "color:var(--accent-red); font-weight:800; font-size:14px;" }, "⏱ " + timeLeft + "s")
+            )
+          ),
+          el("div", { style: "font-size:18px; line-height:1.4; margin-bottom:24px; font-weight:600" }, q.q),
+          ...q.a.map((opt, k) => el("div", {
+            class: "q-card q", style: "cursor:pointer;",
+            onclick: (e) => {
+              if (k === q.c) {
+                e.currentTarget.classList.add("correct"); score++;
+              } else {
+                e.currentTarget.classList.add("wrong");
+              }
+              e.currentTarget.parentElement.style.pointerEvents = "none";
+              setTimeout(() => { i++; showQ() }, 800);
+            }
+          },
+            el("div", { style: "display:flex; gap:16px; align-items:center;" },
+              el("div", { style: "width:36px; height:36px; border-radius:10px; background:var(--bg-dark); display:grid; place-items:center; font-family:'Space Grotesk'; font-weight:800; color:var(--text-muted); flex-shrink:0;" }, String.fromCharCode(65 + k)),
+              el("span", { style: "font-size:16px; font-weight:600;" }, opt)
+            )
+          ))
+        );
+      }
+
+      function finish() {
+        clearInterval(timer);
+        state.completed[c.id] = state.completed[c.id] || {};
+        state.completed[c.id][ch.id] = true;
+        state.quizzes.push({ course: c.id, ch: ch.id, score, date: Date.now() });
+        state.scoreTrend.push(score);
+        awardXP(25);
+        if (state.completed[c.id] && Object.keys(state.completed[c.id]).length === 1) addBadge("First Blood");
+        if (state.quizzes.length >= 5) addBadge("Quiz Master");
+        if (state.streak >= 7) addBadge("No Sleep");
+        save();
+
+        box.innerHTML = "";
+        box.append(
+          el("div", { style: "text-align:center; padding:10px 0" },
+            el("div", { style: "font-size:64px; margin-bottom:16px" }, score >= 3 ? "🏆" : "⚠️"),
+            el("h2", { style: "font-size:24px; margin-bottom:12px;" }, score >= 3 ? "Mission Accomplished" : "Assessment Failed"),
+            el("div", { style: "font-size:18px; color:var(--text-dim); font-weight:700; margin-bottom:8px" }, "Score: " + score + " / " + bank.length),
+            el("div", { style: "color:var(--accent-green); font-family:'Space Grotesk'; font-size:16px; font-weight:800; margin-bottom:32px" }, "+25 XP Gained"),
+            el("div", { style: "display:flex; flex-direction:column; gap:12px;" },
+              chapters[idx + 1] ?
+                el("button", { class: "btn", onclick: () => { modal.remove(); openVideo(c, chapters[idx + 1], idx + 1, chapters); } }, "Next Mission ➡") :
+                el("button", { class: "btn", onclick: () => { modal.remove(); go("/course/" + c.id); } }, "Return to Base"),
+              el("button", { class: "btn ghost", onclick: () => modal.remove() }, "Close")
+            )
+          )
+        );
+      }
+      showQ();
+    }
+
+    /* ============================ FINAL EXAM ============================ */
+    route("/exam", (rest) => {
+      const c = COURSES.find(x => x.id === rest[0]) || COURSES[0];
+      const Q = FINAL_EXAM_QUESTIONS;
+      let answered = {}, timeLeft = 45 * 60;
+
+      const page = el("div", { class: "fade-in" });
+
+      const header = el("div", { class: "card", style: "border-color:var(--accent-red); background:linear-gradient(to right, rgba(239, 68, 68, 0.1), var(--panel)); padding:24px; display:flex; flex-direction:column; gap:16px;" },
+        el("div", { style: "color:var(--accent-red); font-weight:800; font-family:'Space Grotesk'; letter-spacing:0.1em; font-size:13px;" }, "RESTRICTED ACCESS"),
+        el("h1", { style: "margin:0; font-size:26px; line-height:1.2;" }, "Final Hero Certification"),
+        el("h3", { style: "margin:0; color:var(--text-dim); font-size:16px;" }, c.title),
+        el("div", { style: "display:flex; justify-content:space-between; align-items:center; margin-top:8px; border-top:1px solid rgba(255,255,255,0.1); padding-top:16px;" },
+          el("div", { style: "font-size:14px; font-weight:700;" }, "Time Remaining"),
+          el("div", { id: "etm", style: "font-family:'Space Grotesk'; font-size:28px; color:var(--accent-red); font-weight:800; line-height:1" }, "45:00")
+        )
+      );
+      page.append(header);
+
+      const barWrap = el("div", { style: "margin-bottom:24px;" },
+        el("div", { style: "display:flex;justify-content:space-between;align-items:center;margin-bottom:12px" },
+          el("div", { style: "font-weight:700; font-size:15px;" }, "Assessment Progress"),
+          el("div", { id: "eprog", style: "color:var(--accent-cyan); font-family:'Space Grotesk'; font-weight:800; font-size:15px;" }, "0/100 Secured")
+        ),
+        el("div", { class: "progress", style: "height:10px;" }, el("div", { id: "epb", style: "width:0%;" }))
+      );
+      page.append(barWrap);
+
+      const list = el("div", { style: "display:flex; flex-direction:column; gap:16px; margin-bottom:24px" });
+
+      Q.forEach((q, i) => {
+        const card = el("div", { class: "card", style: "padding:20px;" });
+        card.append(
+          el("div", { style: "display:flex; align-items:flex-start; gap:12px; margin-bottom:20px" },
+            el("div", { style: "background:var(--panel-solid); padding:6px 12px; border-radius:8px; font-family:'Space Grotesk'; font-weight:800; color:var(--accent-cyan); font-size:14px;" }, "Q" + (i + 1).toString().padStart(3, '0')),
+            el("div", { style: "font-size:16px; font-weight:700; line-height:1.5" }, q.q)
+          )
+        );
+
+        const optionsGrid = el("div", { style: "display:flex; flex-direction:column; gap:12px;" });
+        q.a.forEach((opt, k) => {
+          const lab = el("label", { style: "display:flex; align-items:flex-start; gap:16px; padding:16px; cursor:pointer; background:var(--bg-dark); border-radius:16px; border:2px solid transparent; transition:all 0.2s" },
+            Object.assign(document.createElement("input"), {
+              type: "radio", name: "q" + i, style: "margin-top:2px; accent-color:var(--accent-cyan); width:20px; height:20px;",
+              onchange: (e) => {
+                answered[i] = k;
+                updateProg();
+                card.querySelectorAll("label").forEach(l => {
+                  l.style.borderColor = "transparent";
+                  l.style.background = "var(--bg-dark)";
+                });
+                e.target.parentElement.style.borderColor = "var(--accent-cyan)";
+                e.target.parentElement.style.background = "rgba(0, 229, 255, 0.05)";
+              }
+            }),
+            el("span", { style: "font-size:15px; font-weight:600; line-height:1.4" }, opt)
+          );
+          optionsGrid.append(lab);
+        });
+        card.append(optionsGrid);
+        list.append(card);
+      });
+
+      page.append(list);
+      page.append(el("div", { style: "display:flex; flex-direction:column; gap:16px; margin-bottom:40px;" },
+        el("button", { class: "btn", onclick: submit, style: "background:var(--accent-red); box-shadow:0 4px 15px rgba(239, 68, 68, 0.4);" }, "Submit Assessment"),
+        el("button", { class: "btn ghost", onclick: () => go("/course/" + c.id) }, "Abort Examination")
+      ));
+
+      function updateProg() {
+        const total = Object.keys(answered).length;
+        $("#eprog").textContent = total + "/100 Secured";
+        $("#epb").style.width = (total) + "%";
+      }
+
+      const t = setInterval(() => {
+        timeLeft--;
+        const m = Math.floor(timeLeft / 60), s = timeLeft % 60;
+        const elTm = $("#etm");
+        if (elTm) {
+          elTm.textContent = m + ":" + (s < 10 ? "0" : "") + s;
+          if (timeLeft < 300) elTm.style.color = "var(--accent-red)";
+        } else clearInterval(t);
+        if (timeLeft <= 0) { clearInterval(t); submit() }
+      }, 1000);
+
+      function submit() {
+        clearInterval(t);
+        let score = 0;
+        Q.forEach((q, i) => { if (answered[i] === q.c) score++ });
+
+        if (score >= 80) {
+          awardXP(500);
+          const cert = { course: c.title, courseId: c.id, score, date: new Date().toLocaleDateString() };
+          state.certificates.push(cert);
+          addBadge("Certified");
+          save();
+          go("/certificate/" + c.id + "/" + score);
+        } else {
+          $("#main").innerHTML = "";
+          $("#main").append(el("div", { class: "fade-in" },
+            el("div", { class: "card", style: "text-align:center; padding:40px 24px; border-color:var(--accent-red); margin-top:20px;" },
+              el("div", { style: "font-size:64px; margin-bottom:20px" }, "🛑"),
+              el("h1", { style: "color:var(--accent-red); font-size:28px; margin-bottom:16px" }, "Clearance Denied"),
+              el("p", { style: "font-size:16px; color:var(--text-dim); margin-bottom:32px; line-height:1.6; font-weight:600;" }, "You scored " + score + "/100. A minimum integrity score of 80 is required."),
+              el("div", { style: "display:flex; flex-direction:column; gap:16px;" },
+                el("button", { class: "btn", onclick: () => location.reload() }, "Retry Assessment"),
+                el("button", { class: "btn ghost", onclick: () => go("/course/" + c.id) }, "Return to Training")
+              )
+            )
+          ));
+        }
+      }
+      return page;
+    });
+
+    /* ============================ CERTIFICATE ============================ */
+    route("/certificate", (rest) => {
+      const c = COURSES.find(x => x.id === rest[0]) || COURSES[0];
+      const score = rest[1] || 100;
+      const page = el("div", { class: "fade-in" });
+      page.append(el("h2", { style: "font-size:24px; margin-bottom:20px;" }, "🎓 Your Certificate"));
+
+      const wrap = el("div", { class: "card", style: "padding:10px; background:var(--bg-dark);" });
+      const cv = el("canvas", { id: "certCanvas", width: "800", height: "600" });
+      wrap.append(cv);
+      page.append(wrap);
+
+      page.append(el("div", { style: "display:flex; flex-direction:column; gap:12px; margin-top:20px;" },
+        el("button", { class: "btn", style: "background:var(--accent-gold); color:#000;", onclick: () => { const a = document.createElement("a"); a.download = "CyberShield-Cert.png"; a.href = cv.toDataURL("image/png"); a.click() } }, "⬇ Download Image"),
+        el("button", { class: "btn ghost", onclick: () => toast("🔗 Share link copied to clipboard") }, "🔗 Share Badge")
+      ));
+
+      setTimeout(() => drawCert(cv, state.user.name, c.title, score), 0);
+      return page;
+    });
+
+    function drawCert(cv, name, course, score) {
+      const x = cv.getContext("2d");
+      const g = x.createLinearGradient(0, 0, 800, 600); g.addColorStop(0, "#0B0E14"); g.addColorStop(1, "#151A23");
+      x.fillStyle = g; x.fillRect(0, 0, 800, 600);
+      x.strokeStyle = "#f59e0b"; x.lineWidth = 6; x.strokeRect(20, 20, 760, 560);
+      x.lineWidth = 2; x.strokeRect(34, 34, 732, 532);
+
+      x.fillStyle = "#f59e0b";["20,20", "780,20", "20,580", "780,580"].forEach(p => { const [a, b] = p.split(",").map(Number); x.beginPath(); x.arc(a, b, 7, 0, Math.PI * 2); x.fill() });
+
+      x.fillStyle = "#00e5ff"; x.font = "bold 26px sans-serif"; x.textAlign = "center";
+      x.fillText("CYBERSHIELD ACADEMY", 400, 100);
+
+      x.fillStyle = "#fff"; x.font = "bold 46px sans-serif";
+      x.fillText("CERTIFICATE", 400, 200);
+      x.fillStyle = "#10b981"; x.font = "bold 18px sans-serif";
+      x.fillText("OF ACHIEVEMENT", 400, 235);
+
+      x.fillStyle = "#94a3b8"; x.font = "20px sans-serif";
+      x.fillText("This certifies that", 400, 300);
+      x.fillStyle = "#f59e0b"; x.font = "bold 42px sans-serif";
+      x.fillText(name, 400, 360);
+
+      x.fillStyle = "#94a3b8"; x.font = "20px sans-serif";
+      x.fillText("has completed the certification", 400, 410);
+      x.fillStyle = "#00e5ff"; x.font = "bold 28px sans-serif";
+      x.fillText(course, 400, 460);
+
+      x.fillStyle = "#94a3b8"; x.font = "18px sans-serif";
+      x.fillText("with a score of " + score + "/100", 400, 500);
+    }
+
+    /* ============================ PROFILE ============================ */
+    route("/profile", () => {
+      const page = el("div", { class: "fade-in" });
+      page.append(el("h1", { style: "font-size:28px; margin-bottom:24px;" }, "Profile"));
+      const u = state.user;
+
+      page.append(el("div", { class: "card", style: "display:flex; gap:20px; align-items:center" },
+        el("div", { class: "avatar", style: "width:80px; height:80px; font-size:32px; flex-shrink:0; background:linear-gradient(135deg, var(--accent-cyan), var(--accent-violet)); color:#fff; border:none;" }, initials(u.name)),
+        el("div", {},
+          el("h3", { style: "margin:0 0 4px; font-size:22px;" }, u.name),
+          el("div", { style: "color:var(--text-dim); font-size:14px; font-weight:600; margin-bottom:8px;" }, u.email),
+          el("div", { class: "badge beg", style: "font-size:12px; padding:6px 12px;" }, "Lvl: " + levelFor(state.xp) + " • " + state.xp + " XP")
+        )
+      ));
+
+      const f = el("form", {
+        class: "card", style: "margin-top:16px", onsubmit: e => {
+          e.preventDefault(); const fd = new FormData(e.target);
+          state.user.name = fd.get("name"); state.user.email = fd.get("email"); state.user.bio = fd.get("bio"); save(); toast("Profile updated"); render();
+        }
+      });
+      f.append(el("h3", { style: "font-size:20px; margin-bottom:16px;" }, "Edit Info"),
+        field("name", "Name", "text", ""), field("email", "Email", "email", ""),
+        el("div", { class: "field" }, el("label", {}, "Bio"), el("textarea", { name: "bio", style: "min-height:100px; background:var(--bg-dark); border:1px solid var(--border); padding:16px; border-radius:12px; color:#fff; outline:none;" }, u.bio || "")),
+        el("button", { class: "btn", type: "submit", style: "margin-top:10px;" }, "Save Changes"));
+
+      setTimeout(() => {
+        const nn = f.querySelector('[name="name"]'); if (nn) nn.value = u.name || "";
+        const ne = f.querySelector('[name="email"]'); if (ne) ne.value = u.email || "";
+        const nb = f.querySelector('[name="bio"]'); if (nb) nb.value = u.bio || "";
+      }, 0);
+      page.append(f);
+
+      page.append(el("div", { class: "card", style: "margin-top:16px" },
+        el("h3", { style: "font-size:20px; margin-bottom:16px;" }, "Data Management"),
+        el("p", { style: "font-size:14px; color:var(--text-dim); margin-bottom:16px; font-weight:600; line-height:1.5;" }, "All progress is stored securely on this device."),
+        el("button", { class: "btn", style: "background:var(--panel-solid); color:var(--accent-red); border:1px solid rgba(239, 68, 68, 0.3); box-shadow:none;", onclick: () => { if (confirm("Erase all local data?")) { localStorage.removeItem(LS); location.reload() } } }, "Reset All Progress")
+      ));
+      return page;
+    });
+
+    /* ============================ RADAR CHART (Mobile Optimized) ============================ */
+    function drawRadar(cv) {
+      if (!cv) return;
+      const x = cv.getContext("2d"), W = cv.width, H = cv.height, cx = W / 2, cy = H / 2, r = Math.min(W, H) / 2 - 30;
+      const labels = ["Net", "Crypt", "Web", "Cloud", "IR"];
+      const vals = [0.7, 0.55, 0.8, 0.65, 0.6].map(v => v * (0.5 + Math.min(1, state.xp / 1000) * 0.5));
+      x.clearRect(0, 0, W, H);
+
+      for (let g = 1; g <= 4; g++) {
+        x.strokeStyle = "rgba(255,255,255,0.05)"; x.beginPath();
+        for (let i = 0; i < labels.length; i++) { const a = Math.PI * 2 / labels.length * i - Math.PI / 2; const px = cx + Math.cos(a) * r * g / 4, py = cy + Math.sin(a) * r * g / 4; i ? x.lineTo(px, py) : x.moveTo(px, py) }
+        x.closePath(); x.stroke();
+      }
+
+      x.beginPath();
+      for (let i = 0; i < labels.length; i++) { const a = Math.PI * 2 / labels.length * i - Math.PI / 2; const px = cx + Math.cos(a) * r * vals[i], py = cy + Math.sin(a) * r * vals[i]; i ? x.lineTo(px, py) : x.moveTo(px, py) }
+      x.closePath();
+
+      x.fillStyle = "rgba(0, 229, 255, 0.2)"; x.fill();
+      x.strokeStyle = "#00e5ff"; x.lineWidth = 2; x.stroke();
+
+      x.fillStyle = "#94a3b8"; x.font = "600 12px sans-serif"; x.textAlign = "center";
+      for (let i = 0; i < labels.length; i++) { const a = Math.PI * 2 / labels.length * i - Math.PI / 2; x.fillText(labels[i], cx + Math.cos(a) * (r + 15), cy + Math.sin(a) * (r + 15) + 4) }
+    }
+
+    /* ============================ START ============================ */
+    render();
+  </script>
+</body>
+
+</html>
