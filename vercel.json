@@ -6,49 +6,16 @@
       "use": "@vercel/node"
     },
     {
-      "src": "cyber-heroes-playground-main/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    },
-    {
       "src": "*.html",
       "use": "@vercel/static"
     }
   ],
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/heroes/(.*)",
-      "dest": "/cyber-heroes-playground-main/dist/$1"
-    },
-    {
-      "src": "/heroes",
-      "dest": "/cyber-heroes-playground-main/dist/index.html"
-    },
-    {
-      "src": "/login",
-      "dest": "/login.html"
-    },
-    {
-      "src": "/academy",
-      "dest": "/cybershield-academy.html"
-    },
-    {
-      "src": "/hub",
-      "dest": "/cyber_safety_awareness_hub.html"
-    },
-    {
-      "src": "/(.*\\.html)",
-      "dest": "/$1"
-    },
-    {
-      "src": "/",
-      "dest": "/login.html"
-    }
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/login", "dest": "/login.html" },
+    { "src": "/academy", "dest": "/cybershield-academy.html" },
+    { "src": "/hub", "dest": "/cyber_safety_awareness_hub.html" },
+    { "src": "/(.*\\.html)", "dest": "/$1" },
+    { "src": "/", "dest": "/index.html" }
   ]
 }
