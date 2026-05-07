@@ -6,6 +6,7 @@
     { "source": "/", "destination": "/index.html" },
     { "source": "/login", "destination": "/login.html" },
     { "source": "/academy", "destination": "/cybershield-academy.html" },
-    { "source": "/hub", "destination": "/cyber_safety_awareness_hub.html" }
+    { "source": "/hub", "destination": "/cyber_safety_awareness_hub.html" },
+    { "source": "/kids/(.*)", "destination": "/kids/index.html" }
   ]
 }

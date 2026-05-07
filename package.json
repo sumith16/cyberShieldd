@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "CyberShield Awareness Hub",
   "scripts": {
+    "build": "cd cyber-heroes-playground-main && npm install && npm run build && cd .. && mkdir -p kids && cp -r cyber-heroes-playground-main/dist/* kids/",
     "start": "serve ."
   },
   "dependencies": {}
