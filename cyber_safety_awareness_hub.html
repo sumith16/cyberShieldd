@@ -1747,7 +1747,63 @@
     renderAlerts();
     renderPhishDomains();
     genPW();
-    renderNews(); 
+    renderNews();
+
+    /* ============================ LANGUAGE SYSTEM ============================ */
+    const HUB_TRANSLATIONS = {
+      en: {
+        home: "Home", news: "Live News", fake: "Fake Msg", av: "Antivirus", fw: "Firewall", ids: "IDS Log",
+        devices: "Devices", pass: "Passwords", web: "Web Check", report: "Report", alerts: "Threat Alerts",
+        welcome: "Welcome back! 👋",
+        welcome_sub: "Your system is safe. Keep monitoring to reach Elite status."
+      },
+      hi: {
+        home: "होम", news: "लाइव न्यूज़", fake: "फर्जी संदेश", av: "एंटीवायरस", fw: "फ़ायरवॉल", ids: "IDS लॉग",
+        devices: "डिवाइस", pass: "पासवर्ड", web: "वेब चेक", report: "रिपोर्ट", alerts: "चेतावनी",
+        welcome: "वापसी पर स्वागत है! 👋",
+        welcome_sub: "आपका सिस्टम सुरक्षित है। एलीट स्तर तक पहुँचने के लिए निगरानी करते रहें।"
+      },
+      kn: {
+        home: "ಮುಖಪುಟ", news: "ಲೈವ್ ನ್ಯೂಸ್", fake: "ನಕಲಿ ಸಂದೇಶ", av: "ಆಂಟಿವೈರಸ್", fw: "ಫೈರ್‌ವಾಲ್", ids: "IDS ಲಾಗ್",
+        devices: "ಸಾಧನಗಳು", pass: "ಪಾಸ್‌ವರ್ಡ್", web: "ವೆಬ್ ಚೆಕ್", report: "ವರದಿ", alerts: "ಎಚ್ಚರಿಕೆಗಳು",
+        welcome: "ಮರಳಿ ಸ್ವಾಗತ! 👋",
+        welcome_sub: "ನಿಮ್ಮ ಸಿಸ್ಟಮ್ ಸುರಕ್ಷಿತವಾಗಿದೆ. ಎಲೈಟ್ ಮಟ್ಟ ತಲುಪಲು ನಿಗಾ ವಹಿಸಿ."
+      }
+    };
+
+    function applyHubLanguage(lang) {
+      const t = HUB_TRANSLATIONS[lang] || HUB_TRANSLATIONS.en;
+      
+      const pills = {
+        'pill-dashboard': `🏠 ${t.home}`, 'pill-news': `📰 ${t.news}`, 'pill-fake': `🕵️ ${t.fake}`,
+        'pill-antivirus': `🦠 ${t.av}`, 'pill-firewall': `🧱 ${t.fw}`, 'pill-ids': `📡 ${t.ids}`,
+        'pill-endpoint': `💻 ${t.devices}`, 'pill-password': `🔑 ${t.pass}`, 'pill-web': `🌐 ${t.web}`,
+        'pill-report': `🚨 ${t.report}`, 'pill-alerts': `🔔 ${t.alerts}`
+      };
+      for(let id in pills) {
+        const el = document.getElementById(id);
+        if(el) el.innerHTML = pills[id];
+      }
+      
+      const heroCard = document.querySelector('.hero-card h1');
+      if(heroCard) heroCard.innerText = t.welcome;
+      const heroSub = document.querySelector('.hero-card p');
+      if(heroSub) heroSub.innerText = t.welcome_sub;
+
+      localStorage.setItem('csa_lang', lang);
+      const selector = document.getElementById('lang-selector');
+      if(selector) selector.value = lang;
+    }
+
+    const langSelectorEl = document.getElementById('lang-selector');
+    if (langSelectorEl) {
+      langSelectorEl.addEventListener('change', function(e) {
+        applyHubLanguage(e.target.value);
+      });
+    }
+
+    const savedLang = localStorage.getItem('csa_lang') || 'en';
+    applyHubLanguage(savedLang);
   </script>
 </body>
 

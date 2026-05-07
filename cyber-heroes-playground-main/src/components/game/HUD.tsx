@@ -16,12 +16,23 @@ export function HUD({ back = false, title }: { back?: boolean; title?: string })
           </Link>
         ) : (
           <div className="flex items-center gap-2">
-            <a
-              href={typeof window !== 'undefined' && window.location.hostname === 'localhost' ? 'http://localhost:3000/' : '/'}
-              className="flex items-center justify-center h-9 px-4 rounded-full bg-primary ink-border text-primary-foreground font-black text-sm pop hover:scale-105 transition-transform"
+            <button
+              onClick={() => {
+                // The game opens in a new tab from the hub, so closing this tab returns the user there.
+                // If the browser blocks window.close(), fall back to navigating.
+                try {
+                  window.close();
+                } catch (_) { /* ignored */ }
+                // Fallback: if window.close() didn't work (browser blocked it), navigate manually
+                setTimeout(() => {
+                  const fallback = document.referrer || (import.meta.env.DEV ? `http://${window.location.hostname}:5500/index.html` : '/');
+                  window.location.href = fallback;
+                }, 300);
+              }}
+              className="flex items-center justify-center h-9 px-4 rounded-full bg-primary ink-border text-primary-foreground font-black text-sm pop hover:scale-105 transition-transform cursor-pointer border-none"
             >
               ← Back to Hub
-            </a>
+            </button>
             <span className="font-display font-bold text-base hidden sm:inline">Cyber Heroes</span>
           </div>
         )}

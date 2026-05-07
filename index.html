@@ -351,30 +351,29 @@
 <body>
 
     <div class="top-nav">
-        <a href="cybershield-academy.html#/profile" class="login-btn-top">👤 Profile</a>
-        <a href="login.html" class="login-btn-top">🔐 Agent Login</a>
+        <a href="cybershield-academy.html#/profile" class="login-btn-top" data-i18n="nav-profile">👤 Profile</a>
+        <a href="login.html" class="login-btn-top" data-i18n="nav-login">🔐 Agent Login</a>
     </div>
 
     <header class="app-header">
-        <h1>CyberShield Ecosystem</h1>
-        <p>Select your portal. A complete suite for cybersecurity education, real-time threat detection, and interactive
+        <h1 data-i18n="header-title">CyberShield Ecosystem</h1>
+        <p data-i18n="header-desc">Select your portal. A complete suite for cybersecurity education, real-time threat detection, and interactive
             learning.</p>
     </header>
 
     <main class="launcher-grid">
 
-        <a href="http://localhost:8080" class="app-card" id="card-kids" target="_blank"
-           onclick="if(window.location.hostname!=='localhost'){this.href='/heroes';this.removeAttribute('target');}">
+        <a href="http://localhost:8080" class="app-card" id="card-kids" target="_blank">
             <div class="card-bg-glow"></div>
             <div class="card-content">
                 <div class="card-header-row">
                     <div class="icon-box">🦸‍♂️</div>
-                    <div class="age-badge">Ages 6-14</div>
+                    <div class="age-badge" data-i18n="age-kids">Ages 6-14</div>
                 </div>
-                <h2 class="app-title">Cyber Heroes Playground</h2>
-                <p class="app-desc">Step into Safety City! Play fun mini-games that teach you about passwords, phishing,
+                <h2 class="app-title" data-i18n="card-kids-title">Cyber Heroes Playground</h2>
+                <p class="app-desc" data-i18n="card-kids-desc">Step into Safety City! Play fun mini-games that teach you about passwords, phishing,
                     and Wi-Fi safety. Earn Shield Coins! 🪙</p>
-                <div class="launch-btn">Play Now 🎮</div>
+                <div class="launch-btn" data-i18n="card-kids-btn">Play Now 🎮</div>
             </div>
         </a>
 
@@ -383,12 +382,12 @@
             <div class="card-content">
                 <div class="card-header-row">
                     <div class="icon-box">🎮</div>
-                    <div class="age-badge">Ages 15-30</div>
+                    <div class="age-badge" data-i18n="age-youth">Ages 15-30</div>
                 </div>
-                <h2 class="app-title">CyberShield Academy</h2>
-                <p class="app-desc">Level up your cyber skills! Take interactive certification courses, learn ethical
+                <h2 class="app-title" data-i18n="card-youth-title">CyberShield Academy</h2>
+                <p class="app-desc" data-i18n="card-youth-desc">Level up your cyber skills! Take interactive certification courses, learn ethical
                     hacking, and pass the Final Exam.</p>
-                <div class="launch-btn">Enter Academy 🚀</div>
+                <div class="launch-btn" data-i18n="card-youth-btn">Enter Academy 🚀</div>
             </div>
         </a>
 
@@ -397,17 +396,19 @@
             <div class="card-content">
                 <div class="card-header-row">
                     <div class="icon-box">🛡️</div>
-                    <div class="age-badge">Everyone</div>
+                    <div class="age-badge" data-i18n="age-everyone">Everyone</div>
                 </div>
-                <h2 class="app-title">Security Hub Engine</h2>
-                <p class="app-desc">Your daily real-time threat detection dashboard. Scan URLs, check live OS metrics,
+                <h2 class="app-title" data-i18n="card-all-title">Security Hub Engine</h2>
+                <p class="app-desc" data-i18n="card-all-desc">Your daily real-time threat detection dashboard. Scan URLs, check live OS metrics,
                     monitor firewalls, and view CISA alerts.</p>
-                <div class="launch-btn">Launch Hub ⚡</div>
+                <div class="launch-btn" data-i18n="card-all-btn">Launch Hub ⚡</div>
             </div>
         </a>
 
     </main>
 
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
 </body>
 
 </html>
